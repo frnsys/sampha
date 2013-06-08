@@ -15,17 +15,18 @@
 
 
     // Retina wizardry!
-    if ( window.devicePixelRatio ) {
-        console.log(window.devicePixelRatio);
-        var el = $('#canvas');
-        var elWidth = canvas.width;
-        var elHeight = canvas.height;
-        el.attr('width', elWidth * window.devicePixelRatio);
-        el.attr('height', elHeight * window.devicePixelRatio);
-        el.css('width', elWidth);
-        el.css('height', elHeight);
-        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
+   function retinatize() {
+        if ( window.devicePixelRatio ) {
+            var el = $('#stage');
+            var elWidth = canvas.width;
+            var elHeight = canvas.height;
+            el.attr('width', elWidth * window.devicePixelRatio);
+            el.attr('height', elHeight * window.devicePixelRatio);
+            el.css('width', elWidth);
+            el.css('height', elHeight);
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+   }
 
     // Listen for window resize
     // and resize the canvas.
@@ -35,6 +36,8 @@
         // Set the canvas to full window.
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+
+        retinatize();
 
         // Need to set b's y to be proper:
         b.y = canvas.height;
