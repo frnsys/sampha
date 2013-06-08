@@ -14,17 +14,16 @@
         };
 
 
-    // Retina wizardry!
+   // Setup the canvas for retina support.
    function retinatize() {
         if ( window.devicePixelRatio ) {
-            var el = $('#stage');
-            var elWidth = canvas.width;
-            var elHeight = canvas.height;
-            el.attr('width', elWidth * window.devicePixelRatio);
-            el.attr('height', elHeight * window.devicePixelRatio);
-            el.css('width', elWidth);
-            el.css('height', elHeight);
-            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            var el = $('#stage'),
+                el_w = canvas.width,
+                el_h = canvas.height;
+            el.attr('width', el_w * window.devicePixelRatio);
+            el.attr('height', el_h * window.devicePixelRatio);
+            el.css('width', el_w);
+            el.css('height', el_h);
         }
    }
 
@@ -37,6 +36,7 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        // Re-retinatize the canvas.
         retinatize();
 
         // Need to set b's y to be proper:
@@ -50,9 +50,8 @@
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
-
         // Draw the polygons
+        // Left
         ctx.fillStyle = '#DF5475';
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
@@ -62,6 +61,7 @@
         ctx.closePath();
         ctx.fill();
 
+        // Right
         ctx.fillStyle = '#7D65D7';
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
@@ -70,12 +70,14 @@
         ctx.lineTo(a.x, a.y);
         ctx.closePath();
         ctx.fill();
+
+        console.log(b.x);
     }
 
     resizeCanvas();
 
     $(window).on('mousemove', function(e){
-        a.x = e.pageX;
+        a.x = window.devicePixelRatio ? e.pageX * window.devicePixelRatio : e.pageX;
         b.x = canvas.width - a.x;
 
         // Gets a little fuzzy around 0,
