@@ -63,8 +63,8 @@
         // To restore non-clipped state.
         ctx.save();
 
-        // Draw the polygons.
         // Left
+        // Draw the clipping polygon.
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
         ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
@@ -73,6 +73,7 @@
         ctx.closePath();
         ctx.clip();
 
+        // Draw the image.
         ctx.drawImage(leftImg, 0,0, canvas.width, canvas.height);
 
         // Restores non-clipped state while preserving
@@ -82,6 +83,7 @@
         ctx.save();
 
         // Right
+        // Draw the clipping polygon.
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
         ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
@@ -89,6 +91,8 @@
         ctx.lineTo(canvas.width, canvas.height);
         ctx.closePath();
         ctx.clip();
+
+        // Draw the image.
         ctx.drawImage(rightImg, 0,0, canvas.width, canvas.height);
 
         // Restores non-clipped state while preserving
