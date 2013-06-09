@@ -31,6 +31,10 @@
     // and resize the canvas.
     window.addEventListener('resize', resizeCanvas, false);
 
+    // Set up the image.
+    var img = document.createElement('IMG');
+    img.src = "http://thesuperslice.com/wp-content/uploads/2013/01/Sampha.jpg";
+
     function resizeCanvas() {
         // Set the canvas to full window.
         canvas.width = window.innerWidth;
@@ -47,32 +51,49 @@
     }
 
     function draw() {
-        // Clear the canvas
+        // Clear the canvas.
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw the polygons
+        // To restore non-clipped state.
+        ctx.save();
+
+        // Draw the polygons.
         // Left
-        ctx.fillStyle = '#DF5475';
+        //ctx.fillStyle = '#DF5475';
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
         ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
         ctx.lineTo(0, 0);
         ctx.lineTo(0, canvas.height);
         ctx.closePath();
-        ctx.fill();
+        //ctx.fill();
+        ctx.clip();
+
+        //ctx.globalCompositeOperation = 'destination-atop';
+
+        //ctx.drawImage(img, 0,0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0,0, canvas.width, canvas.height);
+
+        // Restores non-clipped state while preserving
+        // the rendered clipping.
+        ctx.restore();
+
 
         // Right
-        ctx.fillStyle = '#7D65D7';
-        ctx.beginPath();
-        ctx.moveTo(b.x, b.y);
-        ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
-        ctx.lineTo(canvas.width, 0);
-        ctx.lineTo(canvas.width, canvas.height);
-        ctx.closePath();
-        ctx.fill();
+        //ctx.fillStyle = '#7D65D7';
+        //ctx.beginPath();
+        //ctx.moveTo(b.x, b.y);
+        //ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
+        //ctx.lineTo(canvas.width, 0);
+        //ctx.lineTo(canvas.width, canvas.height);
+        //ctx.closePath();
+        //ctx.fill();
     }
 
-    resizeCanvas();
+    // When the image is ready.
+    img.onload = function() {
+        resizeCanvas();
+    }
 
     $(window).on('mousemove', function(e){
         a.x = window.devicePixelRatio ? e.pageX * window.devicePixelRatio : e.pageX;
