@@ -13,7 +13,9 @@
             x: canvas.width/2
         };
 
-    window.addEventListener('load', setupAudio, false);
+    window.addEventListener('load', function() {
+        window.aural = new Aural();
+    }, false);
     var Aural = (function() {
 
         function Aural() {
@@ -52,7 +54,7 @@
             // Get the proper requestAnimationFrame.
             // Thanks http://bit.ly/13vtjf7
             var vendors = ['ms','moz','webkit','o'];
-            for (var i = 0, i < vendors.length && !window.requestAnimationFrame; i++) {
+            for (var i = 0; i < vendors.length && !window.requestAnimationFrame; i++) {
                 window.requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
             }
 
