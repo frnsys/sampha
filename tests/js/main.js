@@ -31,9 +31,12 @@
     // and resize the canvas.
     window.addEventListener('resize', resizeCanvas, false);
 
-    // Set up the image.
-    var img = document.createElement('IMG');
-    img.src = "http://thesuperslice.com/wp-content/uploads/2013/01/Sampha.jpg";
+    // Set up the images.
+    var leftImg = document.createElement('IMG');
+    leftImg.src = "img/left.jpg";
+
+    var rightImg = document.createElement('IMG');
+    rightImg.src = "img/right.jpg";
 
     function resizeCanvas() {
         // Set the canvas to full window.
@@ -51,6 +54,9 @@
     }
 
     function draw() {
+        // Have to draw each side to a separate canvas,
+        // then copy and render them together on a master canvas.
+
         // Clear the canvas.
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -59,39 +65,39 @@
 
         // Draw the polygons.
         // Left
-        //ctx.fillStyle = '#DF5475';
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
         ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
         ctx.lineTo(0, 0);
         ctx.lineTo(0, canvas.height);
         ctx.closePath();
-        //ctx.fill();
         ctx.clip();
 
-        //ctx.globalCompositeOperation = 'destination-atop';
-
-        //ctx.drawImage(img, 0,0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0,0, canvas.width, canvas.height);
+        ctx.drawImage(leftImg, 0,0, canvas.width, canvas.height);
 
         // Restores non-clipped state while preserving
         // the rendered clipping.
         ctx.restore();
-
+        // Re-save the state.
+        ctx.save();
 
         // Right
-        //ctx.fillStyle = '#7D65D7';
-        //ctx.beginPath();
-        //ctx.moveTo(b.x, b.y);
-        //ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
-        //ctx.lineTo(canvas.width, 0);
-        //ctx.lineTo(canvas.width, canvas.height);
-        //ctx.closePath();
-        //ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
+        ctx.lineTo(canvas.width, 0);
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(rightImg, 0,0, canvas.width, canvas.height);
+
+        // Restores non-clipped state while preserving
+        // the rendered clipping.
+        ctx.restore();
     }
 
     // When the image is ready.
-    img.onload = function() {
+    leftImg.onload = function() {
         resizeCanvas();
     }
 
