@@ -13,6 +13,33 @@
             x: canvas.width/2
         };
 
+    window.addEventListener('load', setupAudio, false);
+    function setupAudio() {
+        var audio = document.getElementById('audio');
+
+        // Try to setup the AudioContext, if supported.
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (window.AudioContext == null) {
+            alert("The Web Audio API is not yet supported by your browser. Please use the latest Chrome or Safari.");
+            return false;
+        }
+
+        var audioCtx = new AudioContext(),
+            analyser = audioCtx.createAnalyser(),
+            src = audioCtx.createMediaElementSource(audio);
+
+            // Connect src ==> analyser,
+            // i.e. src output into analyser's input.
+            src.connect(analyser);
+
+            // Connect analyser ==> output,
+            // i.e. analyser output to the audio context's destination,
+            // i.e. the speakers.
+            analyser.connect(audioCtx.destination);
+
+            // Play the <audio> element.
+            audio.play();
+    }
 
    // Setup the canvas for retina support.
    function retinatize() {
@@ -107,6 +134,7 @@
         resizeCanvas();
     }
 
+    // Bind polygon shapes to horizontal mouse movement.
     $(window).on('mousemove', function(e){
         a.x = window.devicePixelRatio ? e.pageX * window.devicePixelRatio : e.pageX;
         b.x = canvas.width - a.x;
