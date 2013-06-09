@@ -14,32 +14,65 @@
         };
 
     window.addEventListener('load', setupAudio, false);
-    function setupAudio() {
-        var audio = document.getElementById('audio');
+    var Aural = (function() {
 
-        // Try to setup the AudioContext, if supported.
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (window.AudioContext == null) {
-            alert("The Web Audio API is not yet supported by your browser. Please use the latest Chrome or Safari.");
-            return false;
-        }
+        function Aural() {
+            this.audio = document.getElementById('audio');
 
-        var audioCtx = new AudioContext(),
-            analyser = audioCtx.createAnalyser(),
-            src = audioCtx.createMediaElementSource(audio);
+            // Try to setup the AudioContext, if supported.
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (window.AudioContext == null) {
+                alert("The Web Audio API is not yet supported by your browser. Please use the latest Chrome or Safari.");
+                return false;
+            }
+
+            // Create the audio context, analyser,
+            // and source from the <audio> element.
+            var audioCtx = new AudioContext(),
+                src = audioCtx.createMediaElementSource(this.audio);
+            this.analyser = audioCtx.createAnalyser();
 
             // Connect src ==> analyser,
             // i.e. src output into analyser's input.
-            src.connect(analyser);
+            src.connect(this.analyser);
 
             // Connect analyser ==> output,
             // i.e. analyser output to the audio context's destination,
             // i.e. the speakers.
-            analyser.connect(audioCtx.destination);
+            this.analyser.connect(audioCtx.destination);
 
             // Play the <audio> element.
-            audio.play();
-    }
+            this.audio.play();
+
+            // Start the visualization.
+            this.visualize();
+        }
+
+        Aural.prototype.visualize = function() {
+            // Get the proper requestAnimationFrame.
+            // Thanks http://bit.ly/13vtjf7
+            var vendors = ['ms','moz','webkit','o'];
+            for (var i = 0, i < vendors.length && !window.requestAnimationFrame; i++) {
+                window.requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
+            }
+
+            // Call this on each new frame.
+            window.requestAnimationFrame(this.visualize);
+
+            var freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
+            this.analyser.getByteFrequencyData(freqByteData);
+        }
+
+        Aural.prototype.play = function() {
+            this.audio.play();
+        }
+
+        Aural.prototype.pause = function() {
+            this.audio.pause();
+        }
+
+        return Aural;
+    })();
 
    // Setup the canvas for retina support.
    function retinatize() {
@@ -79,6 +112,7 @@
         // Draw.
         draw();
     }
+
 
     function draw() {
         // Have to draw each side to a separate canvas,
