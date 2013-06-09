@@ -55,9 +55,9 @@
         ctx.fillStyle = '#DF5475';
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(0, canvas.height);
+        ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
         ctx.lineTo(0, 0);
-        ctx.lineTo(a.x, a.y);
+        ctx.lineTo(0, canvas.height);
         ctx.closePath();
         ctx.fill();
 
@@ -65,13 +65,11 @@
         ctx.fillStyle = '#7D65D7';
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(canvas.width, canvas.height);
+        ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
         ctx.lineTo(canvas.width, 0);
-        ctx.lineTo(a.x, a.y);
+        ctx.lineTo(canvas.width, canvas.height);
         ctx.closePath();
         ctx.fill();
-
-        console.log(b.x);
     }
 
     resizeCanvas();
