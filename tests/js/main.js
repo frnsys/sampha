@@ -68,6 +68,7 @@
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
         ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
+        //ctx.bezierCurveTo(236, 96, 307, 313, a.x, a.y);
         ctx.lineTo(0, 0);
         ctx.lineTo(0, canvas.height);
         ctx.closePath();
@@ -87,6 +88,7 @@
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
         ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
+        //ctx.bezierCurveTo(236, 96, 307, 313, a.x, a.y);
         ctx.lineTo(canvas.width, 0);
         ctx.lineTo(canvas.width, canvas.height);
         ctx.closePath();
