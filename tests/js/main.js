@@ -13,6 +13,13 @@
             x: canvas.width/2
         };
 
+    // Get the proper requestAnimationFrame.
+    // Thanks http://bit.ly/13vtjf7
+    var vendors = ['ms','moz','webkit','o'];
+    for (var i = 0; i < vendors.length && !window.requestAnimationFrame; i++) {
+        window.requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
+    }
+
     window.addEventListener('load', function() {
         window.aural = new Aural();
     }, false);
@@ -51,18 +58,23 @@
         }
 
         Aural.prototype.visualize = function() {
-            // Get the proper requestAnimationFrame.
-            // Thanks http://bit.ly/13vtjf7
-            var vendors = ['ms','moz','webkit','o'];
-            for (var i = 0; i < vendors.length && !window.requestAnimationFrame; i++) {
-                window.requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
-            }
-
             // Call this on each new frame.
-            window.requestAnimationFrame(this.visualize);
+            window.requestAnimationFrame(this.visualize.bind(this));
 
+            // Get frequency data
             var freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
             this.analyser.getByteFrequencyData(freqByteData);
+
+            var numBins = 10;
+            for (var i = 0; i < numBins; i++) {
+                var magnitude = freqByteData[i];
+                console.log(magnitude);
+
+                // Update bezier curve.
+
+                // Re-draw.
+                draw();
+            }
         }
 
         Aural.prototype.play = function() {
