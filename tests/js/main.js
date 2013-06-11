@@ -129,9 +129,6 @@
 
 
     function draw() {
-        // Have to draw each side to a separate canvas,
-        // then copy and render them together on a master canvas.
-
         // Clear the canvas.
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -175,6 +172,25 @@
         // Restores non-clipped state while preserving
         // the rendered clipping.
         ctx.restore();
+    }
+
+    // Rotate a point around an origin.
+    function rotatePoint(point, origin, angle) {
+        var cos_a = Math.cos(angle),
+            sin_a = Math.sin(angle),
+            dif_x = point.x - origin.x,
+            dif_y = point.y - origin.y,
+            new_x = (cos_a * dif_x) - (sin_a * dif_y) + origin.x,
+            new_y = (sin_a * dif_x) + (cos_a * dif_y) + origin.y;
+
+        point.x = new_x;
+        point.y = new_y;
+    }
+
+    // Point object
+    function Point(x, y) {
+        this.x = x,
+        this.y = y,
     }
 
     // When the image is ready.
