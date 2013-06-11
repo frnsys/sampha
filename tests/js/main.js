@@ -2,15 +2,16 @@
     // Set up the canvas.
     var canvas = document.getElementById('stage'),
         ctx = canvas.getContext('2d'),
+        theta,
 
         // The two moving points are a & b
         a = {
-            y: 0,
-            x: canvas.width/2
+            x: canvas.width/2,
+            y: 0
         },
         b = {
-            y: canvas.height,
-            x: canvas.width/2
+            x: canvas.width/2,
+            y: canvas.height
         };
 
     // Get the proper requestAnimationFrame.
@@ -20,9 +21,11 @@
         window.requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
     }
 
+    // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
     }, false);
+
     var Aural = (function() {
 
         function Aural() {
@@ -51,7 +54,7 @@
             this.analyser.connect(audioCtx.destination);
 
             // Play the <audio> element.
-            this.audio.play();
+            //this.audio.play();
 
             // Start the visualization.
             this.visualize();
@@ -139,8 +142,7 @@
         // Draw the clipping polygon.
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
-        //ctx.bezierCurveTo(236, 96, 307, 313, a.x, a.y);
+        ctx.lineTo(a.x, a.y);
         ctx.lineTo(0, 0);
         ctx.lineTo(0, canvas.height);
         ctx.closePath();
@@ -159,8 +161,7 @@
         // Draw the clipping polygon.
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(a.x, a.y); // this will become a bezierCurveTo
-        //ctx.bezierCurveTo(236, 96, 307, 313, a.x, a.y);
+        ctx.lineTo(a.x, a.y);
         ctx.lineTo(canvas.width, 0);
         ctx.lineTo(canvas.width, canvas.height);
         ctx.closePath();
@@ -172,11 +173,28 @@
         // Restores non-clipped state while preserving
         // the rendered clipping.
         ctx.restore();
+
+        // Draw the audio-reactive bezier line.
+        // Temporarily just doing one big line.
+        ctx.beginPath();
+        var start = { x: canvas.width/2, y: 0 },
+            end = { x: canvas.width/2, y: canvas.height };
+
+        rotatePoint(start, theta);
+        rotatePoint(end, theta);
+        ctx.moveTo(start.x, start.y);
+        // ctx.bezierCurveTo(ctrl_start.x, ctrl_start.y, ctrl_end.x, ctrl_end.y, end.x, end.y)
+        //ctx.bezierCurveTo( canvas.width/2, canvas.height);
+        ctx.lineTo(end.x, end.y);
+        ctx.strokeStyle="#FF0000";
+        ctx.stroke();
+        ctx.closePath();
     }
 
     // Rotate a point around an origin.
-    function rotatePoint(point, origin, angle) {
-        var cos_a = Math.cos(angle),
+    function rotatePoint(point, angle) {
+        var origin = { x: canvas.width/2, y: canvas.height/2 },
+            cos_a = Math.cos(angle),
             sin_a = Math.sin(angle),
             dif_x = point.x - origin.x,
             dif_y = point.y - origin.y,
@@ -185,12 +203,13 @@
 
         point.x = new_x;
         point.y = new_y;
+        return point;
     }
 
     // Point object
     function Point(x, y) {
         this.x = x,
-        this.y = y,
+        this.y = y;
     }
 
     // When the image is ready.
@@ -208,6 +227,10 @@
         if ( b.x <= 3 ) {
             b.x = 0;
         }
+
+        // Calculate new theta.
+        theta = Math.atan(a.x / canvas.height/2);
+
         draw();
     });
 })();
