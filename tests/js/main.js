@@ -2,7 +2,8 @@
     // Set up the canvas.
     var canvas = document.getElementById('stage'),
         ctx = canvas.getContext('2d'),
-        theta,
+        magnitude = 0,
+        theta = 0,
 
         // The two moving points are a & b
         a = {
@@ -54,7 +55,7 @@
             this.analyser.connect(audioCtx.destination);
 
             // Play the <audio> element.
-            //this.audio.play();
+            this.audio.play();
 
             // Start the visualization.
             this.visualize();
@@ -70,10 +71,7 @@
 
             var numBins = 10;
             for (var i = 0; i < numBins; i++) {
-                var magnitude = freqByteData[i];
-                console.log(magnitude);
-
-                // Update bezier curve.
+                magnitude = freqByteData[i];
 
                 // Re-draw.
                 draw();
@@ -138,11 +136,12 @@
         // To restore non-clipped state.
         ctx.save();
 
-        // Left
+        // Right
         // Draw the clipping polygon.
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(a.x, a.y);
+        //ctx.lineTo(a.x, a.y); // make this a bezier
+        ctx.bezierCurveTo(canvas.width/2 + (4 * magnitude), canvas.height/2, canvas.width/2, canvas.height/2, a.x, a.y);
         ctx.lineTo(0, 0);
         ctx.lineTo(0, canvas.height);
         ctx.closePath();
@@ -157,11 +156,12 @@
         // Re-save the state.
         ctx.save();
 
-        // Right
+        // Left
         // Draw the clipping polygon.
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(a.x, a.y);
+        //ctx.lineTo(a.x, a.y);
+        ctx.bezierCurveTo(canvas.width/2 + (4 * magnitude), canvas.height/2, canvas.width/2, canvas.height/2, a.x, a.y);
         ctx.lineTo(canvas.width, 0);
         ctx.lineTo(canvas.width, canvas.height);
         ctx.closePath();
@@ -174,21 +174,35 @@
         // the rendered clipping.
         ctx.restore();
 
-        // Draw the audio-reactive bezier line.
-        // Temporarily just doing one big line.
-        ctx.beginPath();
         var start = { x: canvas.width/2, y: 0 },
-            end = { x: canvas.width/2, y: canvas.height };
-
+            end = { x: canvas.width/2, y: canvas.height },
+            //start_ctrl = { x: canvas.width/2, y: canvas.height/2 },
+            start_ctrl = { x: canvas.width/2 + (2 * magnitude), y: canvas.height/2 },
+            end_ctrl = { x: canvas.width/2, y: canvas.height/2 };
         rotatePoint(start, theta);
         rotatePoint(end, theta);
-        ctx.moveTo(start.x, start.y);
-        // ctx.bezierCurveTo(ctrl_start.x, ctrl_start.y, ctrl_end.x, ctrl_end.y, end.x, end.y)
-        //ctx.bezierCurveTo( canvas.width/2, canvas.height);
-        ctx.lineTo(end.x, end.y);
-        ctx.strokeStyle="#FF0000";
-        ctx.stroke();
-        ctx.closePath();
+
+        // Draw the right audio-reactive bezier line.
+        //ctx.beginPath();
+        //rotatePoint(start_ctrl, theta);
+        //rotatePoint(end_ctrl, theta);
+        //ctx.moveTo(start.x, start.y);
+        //ctx.bezierCurveTo(start_ctrl.x, start_ctrl.y, end_ctrl.x, end_ctrl.y, end.x, end.y);
+        //ctx.strokeStyle="#FF0000";
+        //ctx.stroke();
+        //ctx.closePath();
+
+        // Draw the left audio-reactive bezier line.
+        //ctx.beginPath();
+        //start_ctrl = { x: canvas.width/2 - (2 * magnitude), y: canvas.height/2 },
+        //end_ctrl = { x: canvas.width/2, y: canvas.height/2 };
+        //rotatePoint(start_ctrl, theta);
+        //rotatePoint(end_ctrl, theta);
+        //ctx.moveTo(start.x, start.y);
+        //ctx.bezierCurveTo(start_ctrl.x, start_ctrl.y, end_ctrl.x, end_ctrl.y, end.x, end.y);
+        //ctx.strokeStyle="#00FF00";
+        //ctx.stroke();
+        //ctx.closePath();
     }
 
     // Rotate a point around an origin.
@@ -229,13 +243,13 @@
         }
 
         // Calculate new theta.
-        // Interesting...but not right.
-        //if ( e.pageX < canvas.width/2 ) {
-            //theta = Math.atan(-e.pageX / (canvas.height/2));
-        //} else {
-            //theta = Math.atan(e.pageX / (canvas.height/2));
-        //}
         theta = Math.atan( (a.x - (canvas.width/2)) / (canvas.height/2));
+            // Interesting...but not right.
+            //if ( e.pageX < canvas.width/2 ) {
+                //theta = Math.atan(-e.pageX / (canvas.height/2));
+            //} else {
+                //theta = Math.atan(e.pageX / (canvas.height/2));
+            //}
 
         draw();
     });
