@@ -229,7 +229,13 @@
         }
 
         // Calculate new theta.
-        theta = Math.atan(a.x / canvas.height/2);
+        // Interesting...but not right.
+        //if ( e.pageX < canvas.width/2 ) {
+            //theta = Math.atan(-e.pageX / (canvas.height/2));
+        //} else {
+            //theta = Math.atan(e.pageX / (canvas.height/2));
+        //}
+        theta = Math.atan( (a.x - (canvas.width/2)) / (canvas.height/2));
 
         draw();
     });
