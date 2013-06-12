@@ -173,12 +173,14 @@
             ctx.moveTo(ø.start.x, ø.start.y);
             for (var i = 0; i < pCache.length + 1; i++) {
                 var _p  = pCache[i-1] || ø.start,
-                    p   = pCache[i] || ø.end
-                    mag = mags[i] || 0;
+                    p   = pCache[i] || ø.end,
+                    mag = mags[i] || mags[i-1];
+
+                mag = i % 2 == 0 ? mag * 0.5 : -mag * 0.5;
 
                 // Draw the curve.
-                ctx.bezierCurveTo(_p.x + mag, _p.y,
-                                  p.x + mag, p.y,
+                ctx.bezierCurveTo(_p.x + mag, _p.y + mag,
+                                  p.x + mag, p.y + mag,
                                   p.x, p.y);
             }
             ctx.lineTo(0, canvas.height);
@@ -192,25 +194,24 @@
             // Restores non-clipped state while preserving
             // the rendered clipping.
             ctx.restore();
-            /*
             // Re-save the state.
             ctx.save();
 
             // Left
             // Draw the clipping polygon.
             ctx.beginPath();
-            ctx.moveTo(start.x, start.y);
-            for (var i = 1; i < pCache.length - 1; i++) {
-                var p  = pCache[i],
+            ctx.moveTo(ø.start.x, ø.start.y);
+            for (var i = 0; i < pCache.length + 1; i++) {
+                var _p  = pCache[i-1] || ø.start,
+                    p   = pCache[i] || ø.end,
+                    mag = mags[i] || mags[i-1];
 
-                    // Get the next point
-                    // (which may be the end point).
-                    _p = pCache[i+1] || end;
+                mag = i % 2 == 0 ? -mag * 0.5 : mag * 0.5;
 
                 // Draw the curve.
-                ctx.bezierCurveTo(p.x - mags[i], p.y,
-                                  _p.x - mags[i], _p.y,
-                                  _p.x, _p.y);
+                ctx.bezierCurveTo(_p.x + -mag, _p.y - mag,
+                                  p.x + -mag, p.y - mag,
+                                  p.x, p.y);
             }
             ctx.lineTo(canvas.width, canvas.height);
             ctx.lineTo(canvas.width, 0);
@@ -223,7 +224,6 @@
             // Restores non-clipped state while preserving
             // the rendered clipping.
             ctx.restore();
-            */
         }
 
         return Visual;
@@ -262,7 +262,7 @@
             ø.analyser.connect(audioCtx.destination);
 
             // Play the <audio> element.
-            //ø.audio.play();
+            ø.audio.play();
 
             // Start the frequency detection and visualization.
             ø.visualize();
