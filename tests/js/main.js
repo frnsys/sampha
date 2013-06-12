@@ -184,8 +184,8 @@
                     _p = pCache[i+1] || end;
 
                 // Draw the curve.
-                ctx.bezierCurveTo(p.x + mags[i], p.y + mags[i],
-                                  _p.x + mags[i], _p.y - mags[i],
+                ctx.bezierCurveTo(p.x + mags[i], p.y,
+                                  _p.x + mags[i], _p.y,
                                   _p.x, _p.y);
             }
             ctx.lineTo(0, canvas.height);
@@ -206,8 +206,20 @@
             // Draw the clipping polygon.
             ctx.beginPath();
             ctx.moveTo(start.x, start.y);
-            ctx.lineTo(canvas.width, 0);
+            for (var i = 1; i < pCache.length - 1; i++) {
+                var p  = pCache[i],
+
+                    // Get the next point
+                    // (which may be the end point).
+                    _p = pCache[i+1] || end;
+
+                // Draw the curve.
+                ctx.bezierCurveTo(p.x - mags[i], p.y,
+                                  _p.x - mags[i], _p.y,
+                                  _p.x, _p.y);
+            }
             ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(canvas.width, 0);
             ctx.closePath();
             ctx.clip();
 
