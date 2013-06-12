@@ -19,6 +19,9 @@
             // Number of frequency bins/sections.
             ø.numBins = 10,
 
+            // Rotation angle.
+            ø.theta = 0,
+
             // Keep track of data.
             ø.points = [],
             ø.magnitudes = [],
@@ -34,10 +37,10 @@
             ø.rightImg.src = "img/right.jpg";
 
             // Setup the points.
-            ø.start = new Point(canvas.width/2, 0),
-            ø.end = new Point(canvas.width/2, canvas.height);
+            ø.start = new Point(ø.canvas.width/2, 0),
+            ø.end = new Point(ø.canvas.width/2, ø.canvas.height);
             for (var i = 0; i < ø.numBins; i++) {
-                points.push( new Point() );
+                ø.points.push( new Point() );
             }
 
             // Get the proper requestAnimationFrame.
@@ -63,9 +66,9 @@
                 //}
 
                 // Calculate theta.
-                var mouse_x = e.pageX * window.devicePixelRatio,
-                    theta = Math.atan( (mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
-                ø.rotatePoints(theta);
+                var mouse_x = e.pageX * window.devicePixelRatio;
+                ø.theta = Math.atan( (mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
+                ø.rotatePoints(ø.theta);
                 ø.draw();
             });
 
@@ -74,7 +77,6 @@
                 ø.calibrate();
             }
         }
-
 
         // Rotate all points.
         Visual.prototype.rotatePoints = function(theta) {
@@ -88,8 +90,8 @@
                         ø.pointsCache[i] = ø.rotatePoint(ø.start, theta);
                         break;
                     // Ending point.
-                    case points.length + 1:
-                        ø.pointsCache[i] = ø.rotatePoints(ø.end, theta);
+                    case ø.points.length + 1:
+                        ø.pointsCache[i] = ø.rotatePoint(ø.end, theta);
                         break;
                     // All other points.
                     default:
@@ -97,7 +99,6 @@
                 }
             }
         }
-
 
         // Setup the canvas for retina support.
         Visual.prototype.retinatize = function() {
@@ -128,11 +129,14 @@
 
             // Setup the points.
             for (var i = 0; i < ø.points.length; i++) {
-                var p = points[i],
-                    _p = points[i-1] || ø.start;
+                var p = ø.points[i],
+                    _p = ø.points[i-1] || ø.start;
                 p.x = ø.canvas.width/2;
                 p.y = _p.y + binLength;
             }
+
+            // Re-rotate points.
+            ø.rotatePoints(ø.theta);
 
             // Draw to reflect calibration.
             ø.draw();
@@ -147,7 +151,7 @@
                 dif_x  = point.x - origin.x,
                 dif_y  = point.y - origin.y,
                 new_x  = (cos * dif_x) - (sin * dif_y) + origin.x,
-                new_y  = (sin * dif_x) + (cos * dif_y) + origin.y,
+                new_y  = (sin * dif_x) + (cos * dif_y) + origin.y;
 
             return new Point(new_x, new_y);
         }
@@ -240,8 +244,8 @@
     var Aural = (function() {
 
         function Aural() {
-            var ø = this;
-            ø.audio = document.getElementById('audio');
+            var ø    = this;
+            ø.audio  = document.getElementById('audio');
             ø.visual = new Visual();
 
             // Try to setup the AudioContext, if supported.
@@ -254,8 +258,8 @@
             // Create the audio context, analyser,
             // and source from the <audio> element.
             var audioCtx = new AudioContext(),
-                src = audioCtx.createMediaElementSource(ø.audio);
-            ø.analyser = audioCtx.createAnalyser();
+                src      = audioCtx.createMediaElementSource(ø.audio);
+            ø.analyser   = audioCtx.createAnalyser();
 
             // Connect src ==> analyser,
             // i.e. src output into analyser's input.
@@ -269,7 +273,7 @@
             // Play the <audio> element.
             //ø.audio.play();
 
-            // Start the visualization.
+            // Start the frequency detection and visualization.
             ø.visualize();
         }
 
