@@ -12,26 +12,33 @@
         function Visual() {
             var ø = this;
 
+            // Setup canvas.
             ø.canvas = document.getElementById('stage'),
             ø.ctx = ø.canvas.getContext('2d'),
-            ø.magnitude = 0,
-            ø.theta = 0,
 
-            // The two moving points are a & b
-            ø.a = {
-                x: ø.canvas.width/2,
-                y: 0
-            },
-            ø.b = {
-                x: ø.canvas.width/2,
-                y: ø.canvas.height
-            };
+            // Number of frequency bins/sections.
+            ø.numBins = 10,
+
+            // Keep track of data.
+            ø.points = [],
+            ø.magnitudes = [],
+
+            // Keep track of rotated points.
+            // This will be updated quite often.
+            ø.pointsCache = [],
 
             // Set up the images.
             ø.leftImg = document.createElement('IMG'),
             ø.rightImg = document.createElement('IMG');
             ø.leftImg.src = "img/left.jpg";
             ø.rightImg.src = "img/right.jpg";
+
+            // Setup the points.
+            ø.start = new Point(canvas.width/2, 0),
+            ø.end = new Point(canvas.width/2, canvas.height);
+            for (var i = 0; i < ø.numBins; i++) {
+                points.push( new Point() );
+            }
 
             // Get the proper requestAnimationFrame.
             // Thanks http://bit.ly/13vtjf7
@@ -45,85 +52,113 @@
 
             // Listen for window resize
             // and resize the canvas.
-            window.addEventListener('resize', ø.resizeCanvas.bind(ø), false);
+            window.addEventListener('resize', ø.calibrate.bind(ø), false);
 
             // Bind polygon shapes to horizontal mouse movement.
             $(window).on('mousemove', function(e){
-                ø.a.x = e.pageX * window.devicePixelRatio,
-                ø.b.x = ø.canvas.width - ø.a.x;
-
                 // Gets a little fuzzy around 0,
                 // so force it down.
-                if ( ø.b.x <= 3 ) {
-                    ø.b.x = 0;
-                }
+                //if ( ø.b.x <= 3 ) {
+                    //ø.b.x = 0;
+                //}
 
-                // Calculate new theta.
-                ø.theta = Math.atan( (ø.a.x - (ø.canvas.width/2)) / (ø.canvas.height/2));
+                // Calculate theta.
+                var mouse_x = e.pageX * window.devicePixelRatio,
+                    theta = Math.atan( (mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
+                ø.rotatePoints(theta);
                 ø.draw();
             });
 
             // When the image is ready.
             ø.leftImg.onload = function() {
-                ø.resizeCanvas();
+                ø.calibrate();
             }
         }
 
 
-       // Setup the canvas for retina support.
-       Visual.prototype.retinatize = function() {
-            var ø = this,
-                el = $('#stage'),
+        // Rotate all points.
+        Visual.prototype.rotatePoints = function(theta) {
+            var ø = this;
+
+            // Rotate all points.
+            for (var i = 0; i < ø.points.length + 2; i++) {
+                switch(i) {
+                    // Starting point.
+                    case 1:
+                        ø.pointsCache[i] = ø.rotatePoint(ø.start, theta);
+                        break;
+                    // Ending point.
+                    case points.length + 1:
+                        ø.pointsCache[i] = ø.rotatePoints(ø.end, theta);
+                        break;
+                    // All other points.
+                    default:
+                        ø.pointsCache[i] = ø.rotatePoint(ø.points[i] - 1, theta);
+                }
+            }
+        }
+
+
+        // Setup the canvas for retina support.
+        Visual.prototype.retinatize = function() {
+            var ø    = this,
+                el   = $('#stage'),
                 el_w = ø.canvas.width,
                 el_h = ø.canvas.height;
             el.attr('width', el_w * window.devicePixelRatio);
             el.attr('height', el_h * window.devicePixelRatio);
             el.css('width', el_w);
             el.css('height', el_h);
-       }
+        }
 
-        Visual.prototype.resizeCanvas = function() {
-            var ø = this;
+        // Setup the canvas for retina support.
+        Visual.prototype.calibrate = function() {
+            var ø = this,
+                canvas = ø.canvas;
 
             // Set the canvas to full window.
-            ø.canvas.width = window.innerWidth;
-            ø.canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
             // Re-retinatize the canvas.
             ø.retinatize();
 
-            // Need to set b's y to be proper:
-            ø.b.y = ø.canvas.height;
+            // Calculate the length of each bin/section.
+            var binLength = canvas.height/ø.numBins;
 
-            // Draw.
+            // Setup the points.
+            for (var i = 0; i < ø.points.length; i++) {
+                var p = points[i],
+                    _p = points[i-1] || ø.start;
+                p.x = ø.canvas.width/2;
+                p.y = _p.y + binLength;
+            }
+
+            // Draw to reflect calibration.
             ø.draw();
         }
 
         // Rotate a point around an origin.
         Visual.prototype.rotatePoint = function(point, angle) {
-            var ø = this,
-                origin = { x: ø.canvas.width/2, y: ø.canvas.height/2 },
-                cos_a = Math.cos(angle),
-                sin_a = Math.sin(angle),
-                dif_x = point.x - origin.x,
-                dif_y = point.y - origin.y,
-                new_x = (cos_a * dif_x) - (sin_a * dif_y) + origin.x,
-                new_y = (sin_a * dif_x) + (cos_a * dif_y) + origin.y;
+            var ø      = this,
+                origin = new Point(ø.canvas.width/2, ø.canvas.height/2),
+                cos    = Math.cos(angle),
+                sin    = Math.sin(angle),
+                dif_x  = point.x - origin.x,
+                dif_y  = point.y - origin.y,
+                new_x  = (cos * dif_x) - (sin * dif_y) + origin.x,
+                new_y  = (sin * dif_x) + (cos * dif_y) + origin.y,
 
-            point.x = new_x;
-            point.y = new_y;
-            return point;
+            return new Point(new_x, new_y);
         }
 
         Visual.prototype.draw = function() {
-            var ø = this,
-                ctx = ø.ctx,
+            var ø      = this,
+                ctx    = ø.ctx,
                 canvas = ø.canvas,
-                a = ø.a,
-                b = ø.b,
-                magnitude = ø.magnitude,
-                leftImg = ø.leftImg,
-                rightImg = ø.rightImg;
+                theta  = ø.theta,
+                mags   = ø.magnitudes,
+                pCache = ø.pointsCache;
 
             // Clear the canvas.
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -131,19 +166,35 @@
             // To restore non-clipped state.
             ctx.save();
 
+            // Note: the polygons are drawn: start => end => corner => corner
+
+            // Rotate the points.
+            var start = pCache[0],
+                end   = pCache[pCache.length - 1];
+
             // Right
             // Draw the clipping polygon.
             ctx.beginPath();
-            ctx.moveTo(b.x, b.y);
-            //ctx.lineTo(a.x, a.y); // make this a bezier
-            ctx.bezierCurveTo(canvas.width/2 + (4 * magnitude), canvas.height/2, canvas.width/2, canvas.height/2, a.x, a.y);
-            ctx.lineTo(0, 0);
+            ctx.moveTo(start.x, start.y);
+            for (var i = 1; i < pCache.length - 1; i++) {
+                var p  = pCache[i],
+
+                    // Get the next point
+                    // (which may be the end point).
+                    _p = pCache[i+1] || end;
+
+                // Draw the curve.
+                ctx.bezierCurveTo(p.x + mags[i], p.y + mags[i],
+                                  _p.x + mags[i], _p.y - mags[i],
+                                  _p.x, _p.y);
+            }
             ctx.lineTo(0, canvas.height);
+            ctx.lineTo(0, 0);
             ctx.closePath();
             ctx.clip();
 
             // Draw the image.
-            ctx.drawImage(leftImg, 0,0, canvas.width, canvas.height);
+            ctx.drawImage(ø.leftImg, 0,0, canvas.width, canvas.height);
 
             // Restores non-clipped state while preserving
             // the rendered clipping.
@@ -154,50 +205,18 @@
             // Left
             // Draw the clipping polygon.
             ctx.beginPath();
-            ctx.moveTo(b.x, b.y);
-            //ctx.lineTo(a.x, a.y);
-            ctx.bezierCurveTo(canvas.width/2 + (4 * magnitude), canvas.height/2, canvas.width/2, canvas.height/2, a.x, a.y);
+            ctx.moveTo(start.x, start.y);
             ctx.lineTo(canvas.width, 0);
             ctx.lineTo(canvas.width, canvas.height);
             ctx.closePath();
             ctx.clip();
 
             // Draw the image.
-            ctx.drawImage(rightImg, 0,0, canvas.width, canvas.height);
+            ctx.drawImage(ø.rightImg, 0,0, canvas.width, canvas.height);
 
             // Restores non-clipped state while preserving
             // the rendered clipping.
             ctx.restore();
-
-            var start = { x: canvas.width/2, y: 0 },
-                end = { x: canvas.width/2, y: canvas.height },
-                //start_ctrl = { x: canvas.width/2, y: canvas.height/2 },
-                start_ctrl = { x: canvas.width/2 + (2 * magnitude), y: canvas.height/2 },
-                end_ctrl = { x: canvas.width/2, y: canvas.height/2 };
-            rotatePoint(start, theta);
-            rotatePoint(end, theta);
-
-            // Draw the right audio-reactive bezier line.
-            //ctx.beginPath();
-            //rotatePoint(start_ctrl, theta);
-            //rotatePoint(end_ctrl, theta);
-            //ctx.moveTo(start.x, start.y);
-            //ctx.bezierCurveTo(start_ctrl.x, start_ctrl.y, end_ctrl.x, end_ctrl.y, end.x, end.y);
-            //ctx.strokeStyle="#FF0000";
-            //ctx.stroke();
-            //ctx.closePath();
-
-            // Draw the left audio-reactive bezier line.
-            //ctx.beginPath();
-            //start_ctrl = { x: canvas.width/2 - (2 * magnitude), y: canvas.height/2 },
-            //end_ctrl = { x: canvas.width/2, y: canvas.height/2 };
-            //rotatePoint(start_ctrl, theta);
-            //rotatePoint(end_ctrl, theta);
-            //ctx.moveTo(start.x, start.y);
-            //ctx.bezierCurveTo(start_ctrl.x, start_ctrl.y, end_ctrl.x, end_ctrl.y, end.x, end.y);
-            //ctx.strokeStyle="#00FF00";
-            //ctx.stroke();
-            //ctx.closePath();
         }
 
         return Visual;
@@ -236,7 +255,7 @@
             ø.analyser.connect(audioCtx.destination);
 
             // Play the <audio> element.
-            ø.audio.play();
+            //ø.audio.play();
 
             // Start the visualization.
             ø.visualize();
@@ -251,14 +270,12 @@
             // Get frequency data
             var freqByteData = new Uint8Array(ø.analyser.frequencyBinCount);
             ø.analyser.getByteFrequencyData(freqByteData);
-
-            var numBins = 10;
-            for (var i = 0; i < numBins; i++) {
-                ø.visual.magnitude = freqByteData[i];
-
-                // Re-draw.
-                ø.visual.draw();
+            for (var i = 0; i < ø.visual.numBins; i++) {
+                ø.visual.magnitudes[i] = freqByteData[i];
             }
+
+            // Re-draw.
+            ø.visual.draw();
         }
 
         Aural.prototype.play = function() {
@@ -275,8 +292,8 @@
 
     // Point object
     function Point(x, y) {
-        this.x = x,
-        this.y = y;
+        this.x = x || 0,
+        this.y = y || 0;
     }
 
 
