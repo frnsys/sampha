@@ -171,15 +171,16 @@
             // Draw the clipping polygon.
             ctx.beginPath();
             ctx.moveTo(ø.start.x, ø.start.y);
-            for (var i = 0; i < pCache.length; i++) {
-                var p  = pCache[i];
+            for (var i = 0; i < pCache.length + 1; i++) {
+                var _p  = pCache[i-1] || ø.start,
+                    p   = pCache[i] || ø.end
+                    mag = mags[i] || 0;
+
                 // Draw the curve.
-                //ctx.bezierCurveTo(p.x + mags[i], p.y,
-                                  //_p.x + mags[i], _p.y,
-                                  //_p.x, _p.y);
-                ctx.lineTo(p.x, p.y);
+                ctx.bezierCurveTo(_p.x + mag, _p.y,
+                                  p.x + mag, p.y,
+                                  p.x, p.y);
             }
-            ctx.lineTo(ø.end.x, ø.end.y);
             ctx.lineTo(0, canvas.height);
             ctx.lineTo(0, 0);
             ctx.closePath();
