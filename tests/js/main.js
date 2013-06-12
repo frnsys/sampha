@@ -51,7 +51,7 @@
             }
 
             // Setup devicePixelRatio.
-            window.devicePixelRatio = window.devicePixelRatio || 1
+            window.devicePixelRatio = window.devicePixelRatio || 1;
 
             // Listen for window resize
             // and resize the canvas.
@@ -72,6 +72,8 @@
                 ø.draw();
             });
 
+            ø.rotatePoints(ø.theta);
+
             // When the image is ready.
             ø.leftImg.onload = function() {
                 ø.calibrate();
@@ -86,7 +88,7 @@
             for (var i = 0; i < ø.points.length + 2; i++) {
                 switch(i) {
                     // Starting point.
-                    case 1:
+                    case 0:
                         ø.pointsCache[i] = ø.rotatePoint(ø.start, theta);
                         break;
                     // Ending point.
@@ -95,7 +97,7 @@
                         break;
                     // All other points.
                     default:
-                        ø.pointsCache[i] = ø.rotatePoint(ø.points[i] - 1, theta);
+                        ø.pointsCache[i] = ø.rotatePoint(ø.points[i - 1], theta);
                 }
             }
         }
