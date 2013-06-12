@@ -67,7 +67,9 @@
 
                 // Calculate theta.
                 var mouse_x = e.pageX * window.devicePixelRatio;
-                ø.theta = Math.atan( (mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
+                ø.start.x = e.pageX * window.devicePixelRatio,
+                ø.end.x = ø.canvas.width - ø.start.x;
+                ø.theta = Math.atan((mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
                 ø.rotatePoints(ø.theta);
                 ø.draw();
             });
@@ -85,20 +87,8 @@
             var ø = this;
 
             // Rotate all points.
-            for (var i = 0; i < ø.points.length + 2; i++) {
-                switch(i) {
-                    // Starting point.
-                    case 0:
-                        ø.pointsCache[i] = ø.rotatePoint(ø.start, theta);
-                        break;
-                    // Ending point.
-                    case ø.points.length + 1:
-                        ø.pointsCache[i] = ø.rotatePoint(ø.end, theta);
-                        break;
-                    // All other points.
-                    default:
-                        ø.pointsCache[i] = ø.rotatePoint(ø.points[i - 1], theta);
-                }
+            for (var i = 0; i < ø.points.length; i++) {
+                ø.pointsCache[i] = ø.rotatePoint(ø.points[i], theta);
             }
         }
 
@@ -125,6 +115,9 @@
 
             // Re-retinatize the canvas.
             ø.retinatize();
+
+            // Adjust the end point's y position.
+            ø.end.y = canvas.height;
 
             // Calculate the length of each bin/section.
             var binLength = canvas.height/ø.numBins;
@@ -174,26 +167,19 @@
 
             // Note: the polygons are drawn: start => end => corner => corner
 
-            // Rotate the points.
-            var start = pCache[0],
-                end   = pCache[pCache.length - 1];
-
             // Right
             // Draw the clipping polygon.
             ctx.beginPath();
-            ctx.moveTo(start.x, start.y);
-            for (var i = 1; i < pCache.length - 1; i++) {
-                var p  = pCache[i],
-
-                    // Get the next point
-                    // (which may be the end point).
-                    _p = pCache[i+1] || end;
-
+            ctx.moveTo(ø.start.x, ø.start.y);
+            for (var i = 0; i < pCache.length; i++) {
+                var p  = pCache[i];
                 // Draw the curve.
-                ctx.bezierCurveTo(p.x + mags[i], p.y,
-                                  _p.x + mags[i], _p.y,
-                                  _p.x, _p.y);
+                //ctx.bezierCurveTo(p.x + mags[i], p.y,
+                                  //_p.x + mags[i], _p.y,
+                                  //_p.x, _p.y);
+                ctx.lineTo(p.x, p.y);
             }
+            ctx.lineTo(ø.end.x, ø.end.y);
             ctx.lineTo(0, canvas.height);
             ctx.lineTo(0, 0);
             ctx.closePath();
@@ -205,6 +191,7 @@
             // Restores non-clipped state while preserving
             // the rendered clipping.
             ctx.restore();
+            /*
             // Re-save the state.
             ctx.save();
 
@@ -235,6 +222,7 @@
             // Restores non-clipped state while preserving
             // the rendered clipping.
             ctx.restore();
+            */
         }
 
         return Visual;
