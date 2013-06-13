@@ -1,10 +1,20 @@
 (function() {
 
+    // Vertically center logo.
+    var marginTop = ($(window).height()/2) - $('.logo').height();
+    $('.logo').css('margin-top', marginTop);
+
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
     }, false);
 
+    // Summoning.
+    $('.trigger').on('click', function() {
+        $('canvas').animate({ top: '0%', opacity: 1 }, 1500, function() {
+            //window.aural.play();
+        });
+    });
 
     // Visual elements (i.e. canvas)
     var Visual = (function() {
@@ -17,7 +27,7 @@
             ø.ctx = ø.canvas.getContext('2d'),
 
             // Number of frequency bins/sections.
-            ø.numBins = 10,
+            ø.numBins = 200,
 
             // Rotation angle.
             ø.theta = 0,
@@ -176,7 +186,13 @@
                     p   = pCache[i] || ø.end,
                     mag = mags[i] || mags[i-1];
 
+                // Alternate even/odd points, for a wave effect.
                 mag = i % 2 == 0 ? mag * 0.5 : -mag * 0.5;
+
+                // Straighten the beginning and ending segments.
+                if ( _p === ø.start || p === ø.end ) {
+                    mag = 0;
+                }
 
                 // Draw the curve.
                 ctx.bezierCurveTo(_p.x + mag, _p.y + mag,
@@ -206,7 +222,13 @@
                     p   = pCache[i] || ø.end,
                     mag = mags[i] || mags[i-1];
 
+                // Alternate even/odd points, for a wave effect.
                 mag = i % 2 == 0 ? -mag * 0.5 : mag * 0.5;
+
+                // Straighten the beginning and ending segments.
+                if ( _p === ø.start || p === ø.end ) {
+                    mag = 0;
+                }
 
                 // Draw the curve.
                 ctx.bezierCurveTo(_p.x + -mag, _p.y - mag,
@@ -260,9 +282,6 @@
             // i.e. analyser output to the audio context's destination,
             // i.e. the speakers.
             ø.analyser.connect(audioCtx.destination);
-
-            // Play the <audio> element.
-            ø.audio.play();
 
             // Start the frequency detection and visualization.
             ø.visualize();
