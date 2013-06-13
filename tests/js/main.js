@@ -12,7 +12,7 @@
     // Summoning.
     $('.trigger').on('click', function() {
         $('canvas').animate({ top: '0%', opacity: 1 }, 1500, function() {
-            //window.aural.play();
+            window.aural.play();
         });
     });
 
