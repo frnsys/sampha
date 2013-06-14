@@ -27,7 +27,7 @@
             ø.ctx = ø.canvas.getContext('2d'),
 
             // Number of frequency bins/sections.
-            ø.numBins = 200,
+            ø.numBins = 400,
 
             // Rotation angle.
             ø.theta = 0,
