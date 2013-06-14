@@ -195,8 +195,8 @@
                 }
 
                 // Draw the curve.
-                ctx.bezierCurveTo(_p.x + mag, _p.y + mag,
-                                  p.x + mag, p.y + mag,
+                ctx.bezierCurveTo(_p.x + mag *2, _p.y + mag,
+                                  p.x + mag *2, p.y + mag,
                                   p.x, p.y);
             }
             ctx.lineTo(0, canvas.height);
@@ -231,8 +231,8 @@
                 }
 
                 // Draw the curve.
-                ctx.bezierCurveTo(_p.x + -mag, _p.y - mag,
-                                  p.x + -mag, p.y - mag,
+                ctx.bezierCurveTo(_p.x + -mag*2, _p.y - mag,
+                                  p.x + -mag*2, p.y - mag,
                                   p.x, p.y);
             }
             ctx.lineTo(canvas.width, canvas.height);
