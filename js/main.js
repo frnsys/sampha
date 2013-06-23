@@ -15,10 +15,6 @@
 
 (function() {
 
-    // Vertically center logo.
-    var marginTop = ($(window).height()/2) - $('.logo').height();
-    $('.logo').css('margin-top', marginTop);
-
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
