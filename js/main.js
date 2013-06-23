@@ -31,6 +31,7 @@
         });
     });
 
+    // Audio controls
     $('.controls').on('click', '.icon-play', function() {
         window.aural.play();
         $(this)
@@ -43,6 +44,21 @@
             .removeClass('icon-pause')
             .addClass('icon-play');
     });
+
+    // Nav
+    $('[data-target=releases]').on('click', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    $('[data-target=contact]').on('click', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    $('[data-target=activity]').on('click', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
 
     // Visual elements (i.e. canvas)
     var Visual = (function() {
