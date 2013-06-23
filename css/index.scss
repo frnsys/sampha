@@ -19,14 +19,8 @@ html, body {
 canvas {
     display:block;
     position:absolute;
-    top:100%;
-    opacity:0;
-}
-
-section {
-    width:100%;
-    height:100%;
-    text-align:center;
+    top:0;
+    left:0;
 }
 
 .logo {
@@ -34,13 +28,15 @@ section {
     width:400px;
 }
 
-.trigger {
-    @include transition;
-    cursor:pointer;
-    font-size:4em;
-    margin:1em 0;
+.controls {
+    z-index:100;
+    position:relative;
+    color:#fff;
+    font-size:2em;
+    text-align:center;
+    padding:0.5em;
 
-    &:hover {
-        color:#B75D58;
+    span {
+        cursor:pointer;
     }
 }

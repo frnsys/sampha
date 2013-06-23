@@ -27,8 +27,21 @@
     // Summoning.
     $('.trigger').on('click', function() {
         $('canvas').animate({ top: '0%', opacity: 1 }, 1500, function() {
-            window.aural.play();
+            //window.aural.play();
         });
+    });
+
+    $('.controls').on('click', '.icon-play', function() {
+        window.aural.play();
+        $(this)
+            .removeClass('icon-play')
+            .addClass('icon-pause');
+    });
+    $('.controls').on('click', '.icon-pause', function() {
+        window.aural.pause();
+        $(this)
+            .removeClass('icon-pause')
+            .addClass('icon-play');
     });
 
     // Visual elements (i.e. canvas)

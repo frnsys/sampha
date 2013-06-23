@@ -1,0 +1,18 @@
+{
+  "fonts": [
+    "fontcustom_b78c77fb572432e700205b7193cca8e8.ttf",
+    "fontcustom_b78c77fb572432e700205b7193cca8e8.woff",
+    "fontcustom_b78c77fb572432e700205b7193cca8e8.eot",
+    "fontcustom_b78c77fb572432e700205b7193cca8e8.svg"
+  ],
+  "templates": [
+    "fontcustom.css",
+    "fontcustom-preview.html"
+  ],
+  "file_name": "fontcustom_b78c77fb572432e700205b7193cca8e8",
+  "glyphs": [
+    "close",
+    "pause",
+    "play"
+  ]
+}
