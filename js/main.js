@@ -216,10 +216,11 @@
             // Clear the canvas.
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Draw the base image.
+            ctx.drawImage(ø.baseImg, 0,0, canvas.width, canvas.height);
+
             // To restore non-clipped state.
             ctx.save();
-
-            // Note: the polygons are drawn: start => end => corner => corner
 
             // Right
             // Draw the clipping polygon.
@@ -243,23 +244,7 @@
                                   p.x + mag *2, p.y + mag,
                                   p.x, p.y);
             }
-            ctx.lineTo(0, canvas.height);
-            ctx.lineTo(0, 0);
-            ctx.closePath();
-            ctx.clip();
 
-            // Draw the image.
-            ctx.drawImage(ø.baseImg, 0,0, canvas.width, canvas.height);
-
-            // Restores non-clipped state while preserving
-            // the rendered clipping.
-            ctx.restore();
-            // Re-save the state.
-            ctx.save();
-
-            // Left
-            // Draw the clipping polygon.
-            ctx.beginPath();
             ctx.moveTo(ø.start.x, ø.start.y);
             for (var i = 0; i < pCache.length + 1; i++) {
                 var _p  = pCache[i-1] || ø.start,
@@ -279,8 +264,6 @@
                                   p.x + -mag*2, p.y - mag,
                                   p.x, p.y);
             }
-            ctx.lineTo(canvas.width, canvas.height);
-            ctx.lineTo(canvas.width, 0);
             ctx.closePath();
             ctx.clip();
 
