@@ -61,7 +61,7 @@ a, a:visited {
     text-decoration:none;
     color:#fff;
     &:hover {
-        color:#E77A8A;
+        color:#FC4D8F;
     }
 }
 
@@ -72,6 +72,8 @@ section {
     font-size:0.8em;
     padding:1em;
     max-width:400px;
+    max-height:80%;
+    overflow-y:scroll;
 }
 h3 {
     background:#c255e6;
@@ -88,21 +90,32 @@ h3 {
 }
 
 .releases {
-    max-height:80%;
-    overflow-y:scroll;
-
     h6 {
         margin:1.8em 0 0.4em 0;
         border-bottom:1px solid #fc4d8f;
+        position:relative;
+        .icon-link {
+            right:0.4em !important;
+            margin-top:-0.1em;
+        }
     }
     > ul {
         margin-bottom:4em;
     }
     .release {
         margin:0 0 1.2em 0;
+        ul {
+            position:relative;
+        }
         li {
             letter-spacing:0.4em;
             margin:0 0 0.2em 2em;
+        }
+        .icon-link {
+            vertical-align:middle;
+            position:absolute;
+            right:0;
+            opacity:0.6;
         }
     }
 }

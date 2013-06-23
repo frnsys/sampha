@@ -10,6 +10,7 @@
 }
 
 .icon-close:before,
+.icon-link:before,
 .icon-pause:before,
 .icon-play:before {
   font-family: "icons";
@@ -24,5 +25,6 @@
 }
 
 .icon-close:before { content: "\f100"; }
-.icon-pause:before { content: "\f101"; }
-.icon-play:before { content: "\f102"; }
+.icon-link:before { content: "\f101"; }
+.icon-pause:before { content: "\f102"; }
+.icon-play:before { content: "\f103"; }

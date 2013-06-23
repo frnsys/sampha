@@ -4,16 +4,17 @@
 
 @font-face {
   font-family: "fontcustom";
-  src: url("fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.eot");
-  src: url("fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.eot?#iefix") format("embedded-opentype"),
-       url("fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.woff") format("woff"),
-       url("fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.ttf") format("truetype"),
-       url("fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.svg#fontcustom") format("svg");
+  src: url("fontcustom_ebb48a28796b58d9e4ab8e594069e48c.eot");
+  src: url("fontcustom_ebb48a28796b58d9e4ab8e594069e48c.eot?#iefix") format("embedded-opentype"),
+       url("fontcustom_ebb48a28796b58d9e4ab8e594069e48c.woff") format("woff"),
+       url("fontcustom_ebb48a28796b58d9e4ab8e594069e48c.ttf") format("truetype"),
+       url("fontcustom_ebb48a28796b58d9e4ab8e594069e48c.svg#fontcustom") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 .icon-close:before,
+.icon-link:before,
 .icon-pause:before,
 .icon-play:before {
   font-family: "fontcustom";
@@ -28,5 +29,6 @@
 }
 
 .icon-close:before { content: "\f100"; }
-.icon-pause:before { content: "\f101"; }
-.icon-play:before { content: "\f102"; }
+.icon-link:before { content: "\f101"; }
+.icon-pause:before { content: "\f102"; }
+.icon-play:before { content: "\f103"; }
