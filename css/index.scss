@@ -21,6 +21,7 @@ canvas {
     position:absolute;
     top:0;
     left:0;
+    z-index:0;
 }
 
 .logo {
@@ -28,15 +29,38 @@ canvas {
     width:400px;
 }
 
+.nav,
 .controls {
-    z-index:100;
+    z-index:10;
     position:relative;
     color:#fff;
-    font-size:2em;
     text-align:center;
     padding:0.5em;
 
+}
+.controls {
+    font-size:2em;
     span {
         cursor:pointer;
+    }
+}
+.nav {
+    font-size:0.8em;
+    font-family:'monaco', 'courier new', 'monospace';
+    padding:0.5em 2em;
+    position:absolute;
+    bottom:1em;
+    width:100%;
+    li { display:inline-block; }
+    li:first-child { float:left; }
+    li:last-child { float:right; }
+}
+
+a, a:visited {
+    @include transition;
+    text-decoration:none;
+    color:#fff;
+    &:hover {
+        color:#E77A8A;
     }
 }

@@ -1,15 +1,15 @@
 {
   "fonts": [
-    "fontcustom_b78c77fb572432e700205b7193cca8e8.ttf",
-    "fontcustom_b78c77fb572432e700205b7193cca8e8.woff",
-    "fontcustom_b78c77fb572432e700205b7193cca8e8.eot",
-    "fontcustom_b78c77fb572432e700205b7193cca8e8.svg"
+    "fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.ttf",
+    "fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.woff",
+    "fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.eot",
+    "fontcustom_68bd15f708a3cebbe9865b8cc316c3e1.svg"
   ],
   "templates": [
     "fontcustom.css",
     "fontcustom-preview.html"
   ],
-  "file_name": "fontcustom_b78c77fb572432e700205b7193cca8e8",
+  "file_name": "fontcustom_68bd15f708a3cebbe9865b8cc316c3e1",
   "glyphs": [
     "close",
     "pause",

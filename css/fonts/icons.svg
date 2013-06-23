@@ -5,7 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Sun Jun 23 16:11:16 2013
+Created by FontForge 20120731 at Sun Jun 23 16:37:20 2013
  By Francis Tseng
 Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
 </metadata>
@@ -19,7 +19,7 @@ Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
     panose-1="2 0 6 9 0 0 0 0 0 0"
     ascent="448"
     descent="-64"
-    bbox="24.7471 -39.2549 487.255 423.253"
+    bbox="24.7471 -47.6025 487.255 432.339"
     underline-thickness="25.6"
     underline-position="-51.2"
     unicode-range="U+F100-F102"
@@ -28,8 +28,8 @@ Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
     <glyph glyph-name="uniF100" unicode="&#xf100;" 
 d="M487.255 322.785l-130.788 -130.788l130.786 -130.785l-100.468 -100.467l-130.785 130.785l-130.785 -130.785l-100.468 100.467l130.786 130.785l-130.786 130.788l100.465 100.468l130.788 -130.788l130.788 130.788z" />
     <glyph glyph-name="uniF101" unicode="&#xf101;" 
-d="M71.6797 -21.335v426.667h151.04v-426.667h-151.04zM289.282 -21.335v426.667h151.04v-426.667h-151.04z" />
+d="M87.04 -5.97461v395.947h120.32v-395.947h-120.32zM56.3203 -36.6953h181.76v457.388h-181.76v-457.388zM304.643 -5.97461v395.947h120.32v-395.947h-120.32zM273.923 -36.6953h181.76v457.388h-181.76v-457.388z" />
     <glyph glyph-name="uniF102" unicode="&#xf102;" 
-d="M71.6797 405.332l368.643 -219.238l-368.643 -207.429v426.667z" />
+d="M470.991 185.727l-414.671 246.612v-479.941zM87.04 378.326l322.614 -191.863l-322.614 -181.53v373.394z" />
   </font>
 </defs></svg>
