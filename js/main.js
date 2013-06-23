@@ -20,6 +20,7 @@
         window.aural = new Aural();
     }, false);
 
+    // TODO change to do on load.
     // Summoning.
     $('.trigger').on('click', function() {
         $('canvas').animate({ top: '0%', opacity: 1 }, 1500, function() {
@@ -84,10 +85,10 @@
             ø.pointsCache = [],
 
             // Set up the images.
-            ø.leftImg = document.createElement('IMG'),
-            ø.rightImg = document.createElement('IMG');
-            ø.leftImg.src = "img/left.jpg";
-            ø.rightImg.src = "img/right.jpg";
+            ø.baseImg = document.createElement('IMG'),
+            ø.colorImg = document.createElement('IMG');
+            ø.baseImg.src = "img/base.jpg";
+            ø.colorImg.src = "img/color.jpg";
 
             // Setup the points.
             ø.start = new Point(ø.canvas.width/2, 0),
@@ -130,7 +131,7 @@
             ø.rotatePoints(ø.theta);
 
             // When the image is ready.
-            ø.leftImg.onload = function() {
+            ø.baseImg.onload = function() {
                 ø.calibrate();
             }
         }
@@ -248,7 +249,7 @@
             ctx.clip();
 
             // Draw the image.
-            ctx.drawImage(ø.leftImg, 0,0, canvas.width, canvas.height);
+            ctx.drawImage(ø.baseImg, 0,0, canvas.width, canvas.height);
 
             // Restores non-clipped state while preserving
             // the rendered clipping.
@@ -284,7 +285,7 @@
             ctx.clip();
 
             // Draw the image.
-            ctx.drawImage(ø.rightImg, 0,0, canvas.width, canvas.height);
+            ctx.drawImage(ø.colorImg, 0,0, canvas.width, canvas.height);
 
             // Restores non-clipped state while preserving
             // the rendered clipping.
