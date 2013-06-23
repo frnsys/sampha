@@ -48,14 +48,17 @@
     // Nav
     $('[data-target=releases]').on('click', function(e) {
         e.preventDefault();
+        $('.releases').fadeToggle();
         return false;
     });
     $('[data-target=contact]').on('click', function(e) {
         e.preventDefault();
+        $('.contact').fadeToggle();
         return false;
     });
     $('[data-target=activity]').on('click', function(e) {
         e.preventDefault();
+        $('.activity').fadeToggle();
         return false;
     });
 

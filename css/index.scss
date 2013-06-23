@@ -66,6 +66,7 @@ a, a:visited {
 }
 
 section {
+    display:none;
     z-index:10;
     position:absolute;
     color:#fff;
@@ -74,6 +75,11 @@ section {
     max-width:400px;
     max-height:80%;
     overflow-y:scroll;
+    overflow-x:hidden;
+
+    img, iframe {
+        max-width:100%;
+    }
 }
 h3 {
     background:#c255e6;
@@ -119,3 +125,16 @@ h3 {
         }
     }
 }
+.activity {
+    right:0;
+
+    ol {
+        padding:0;
+        li {
+            margin: 2em 0;
+            padding:0 0 2em 0;
+            border-bottom:1px solid #fc4d8f;
+        }
+    }
+}
+
