@@ -169,6 +169,7 @@
             ø.end.y = canvas.height;
 
             // Calculate the length of each bin/section.
+            //var binLength = Math.sqrt(Math.pow(ø.start.x - ø.end.x, 2) + Math.pow(ø.start.y - ø.end.y, 2))/ø.numBins;
             var binLength = canvas.height/ø.numBins;
 
             // Setup the points.
@@ -224,7 +225,7 @@
                 var _p  = pCache[i-1] || ø.start,
                     p   = pCache[i] || ø.end,
                     mag = mags[i] || mags[i-1],
-                    x_len = mag*2,
+                    x_len = mag,
                     _ctrl = {}, ctrl = {}, angle;
 
                 // Straighten the beginning and ending segments.
@@ -255,7 +256,7 @@
                 var _p  = pCache[i-1] || ø.start,
                     p   = pCache[i] || ø.end,
                     mag = mags[i] || mags[i-1],
-                    x_len = mag*2,
+                    x_len = mag,
                     _ctrl = {}, ctrl = {}, angle;
 
                 // Straighten the beginning and ending segments.
