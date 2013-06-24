@@ -113,17 +113,12 @@
 
             // Bind polygon shapes to horizontal mouse movement.
             $(window).on('mousemove', function(e){
-                // Gets a little fuzzy around 0,
-                // so force it down.
-                //if ( ø.b.x <= 3 ) {
-                    //ø.b.x = 0;
-                //}
-
                 // Calculate theta.
                 var mouse_x = e.pageX * window.devicePixelRatio;
                 ø.start.x = e.pageX * window.devicePixelRatio,
                 ø.end.x = ø.canvas.width - ø.start.x;
                 ø.theta = Math.atan((mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
+
                 ø.rotatePoints(ø.theta);
                 ø.draw();
             });
@@ -222,46 +217,67 @@
             // To restore non-clipped state.
             ctx.save();
 
-            // Right
-            // Draw the clipping polygon.
+            // Draw the soundwave.
             ctx.beginPath();
             ctx.moveTo(ø.start.x, ø.start.y);
             for (var i = 0; i < pCache.length + 1; i++) {
                 var _p  = pCache[i-1] || ø.start,
                     p   = pCache[i] || ø.end,
-                    mag = mags[i] || mags[i-1];
-
-                // Alternate even/odd points, for a wave effect.
-                mag =  mag * 0.5;
+                    mag = mags[i] || mags[i-1],
+                    x_len = mag*2,
+                    _ctrl = {}, ctrl = {}, angle;
 
                 // Straighten the beginning and ending segments.
                 if ( _p === ø.start || p === ø.end ) {
-                    mag = 0;
+                    x_len = 0,
+                    _ctrl.y = _p.y,
+                    ctrl.y = p.y;
+                } else {
+                    // Theta needs to be shifted by π/2,
+                    // and then our target angle is
+                    // π/2 - the adjusted theta.
+                    angle = (Math.PI/2) - (ø.theta + (Math.PI/2)),
+                    _ctrl.y = _p.y - (Math.tan(angle) * x_len),
+                    ctrl.y = p.y - (Math.tan(angle) * x_len);
                 }
 
+                _ctrl.x = _p.x + x_len,
+                ctrl.x = p.x + x_len;
+
+
                 // Draw the curve.
-                ctx.bezierCurveTo(_p.x + mag *4, _p.y + mag,
-                                  p.x + mag *4, p.y + mag,
+                ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
+                                  ctrl.x, ctrl.y,
                                   p.x, p.y);
             }
 
-            //ctx.moveTo(ø.start.x, ø.start.y);
             for (var i = pCache.length - 1; i >= 0; i--) {
                 var _p  = pCache[i-1] || ø.start,
                     p   = pCache[i] || ø.end,
-                    mag = mags[i] || mags[i-1];
-
-                // Alternate even/odd points, for a wave effect.
-                mag = -mag * 0.5;
+                    mag = mags[i] || mags[i-1],
+                    x_len = mag*2,
+                    _ctrl = {}, ctrl = {}, angle;
 
                 // Straighten the beginning and ending segments.
                 if ( _p === ø.start || p === ø.end ) {
-                    mag = 0;
+                    x_len = 0,
+                    _ctrl.y = _p.y,
+                    ctrl.y = p.y;
+                } else {
+                    // Theta needs to be shifted by π/2,
+                    // and then our target angle is
+                    // π/2 - the adjusted theta.
+                    angle = (Math.PI/2) - (ø.theta + (Math.PI/2)),
+                    _ctrl.y = _p.y + (Math.tan(angle) * x_len),
+                    ctrl.y = p.y + (Math.tan(angle) * x_len);
                 }
 
+                _ctrl.x = _p.x - x_len,
+                ctrl.x = p.x - x_len;
+
                 // Draw the curve.
-                ctx.bezierCurveTo(_p.x + mag*4, _p.y + mag,
-                                  p.x + mag*4, p.y + mag,
+                ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
+                                  ctrl.x, ctrl.y,
                                   p.x, p.y);
             }
             ctx.closePath();
