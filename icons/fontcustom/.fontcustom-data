@@ -1,18 +1,21 @@
 {
   "fonts": [
-    "fontcustom_ebb48a28796b58d9e4ab8e594069e48c.ttf",
-    "fontcustom_ebb48a28796b58d9e4ab8e594069e48c.woff",
-    "fontcustom_ebb48a28796b58d9e4ab8e594069e48c.eot",
-    "fontcustom_ebb48a28796b58d9e4ab8e594069e48c.svg"
+    "fontcustom_caf84bc21ab1372f661a1dbd0bd36f6a.ttf",
+    "fontcustom_caf84bc21ab1372f661a1dbd0bd36f6a.woff",
+    "fontcustom_caf84bc21ab1372f661a1dbd0bd36f6a.eot",
+    "fontcustom_caf84bc21ab1372f661a1dbd0bd36f6a.svg"
   ],
   "templates": [
     "fontcustom.css",
     "fontcustom-preview.html"
   ],
-  "file_name": "fontcustom_ebb48a28796b58d9e4ab8e594069e48c",
+  "file_name": "fontcustom_caf84bc21ab1372f661a1dbd0bd36f6a",
   "glyphs": [
+    "activity",
     "close",
     "link",
+    "logo",
+    "music",
     "pause",
     "play"
   ]

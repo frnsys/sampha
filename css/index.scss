@@ -49,6 +49,7 @@ canvas {
 .nav {
     font-size:0.8em;
     padding:0.5em 2em;
+    height:4em;
     position:absolute;
     bottom:1em;
     width:100%;
@@ -140,13 +141,27 @@ h3 {
 }
 
 .contact {
-    bottom:3em;
+    bottom:6em;
     width:100%;
     max-width:none;
     text-align:center;
+    h3 {
+        display:inline-block;
+        padding:0 9em;
+    }
 
     li {
         display:inline-block;
         margin:0 0.4em;
     }
+}
+
+.icon-music,
+.icon-activity {
+    font-size:3em;
+}
+.icon-logo {
+    font-size:6em;
+    margin-top:-0.2em;
+    display:inline-block;
 }

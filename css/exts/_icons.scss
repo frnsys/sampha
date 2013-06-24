@@ -9,8 +9,11 @@
   font-style: normal;
 }
 
+.icon-activity:before,
 .icon-close:before,
 .icon-link:before,
+.icon-logo:before,
+.icon-music:before,
 .icon-pause:before,
 .icon-play:before {
   font-family: "icons";
@@ -24,7 +27,10 @@
   text-decoration: inherit;
 }
 
-.icon-close:before { content: "\f100"; }
-.icon-link:before { content: "\f101"; }
-.icon-pause:before { content: "\f102"; }
-.icon-play:before { content: "\f103"; }
+.icon-activity:before { content: "\f100"; }
+.icon-close:before { content: "\f101"; }
+.icon-link:before { content: "\f102"; }
+.icon-logo:before { content: "\f103"; }
+.icon-music:before { content: "\f104"; }
+.icon-pause:before { content: "\f105"; }
+.icon-play:before { content: "\f106"; }
