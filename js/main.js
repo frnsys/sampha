@@ -71,7 +71,7 @@
             ø.ctx = ø.canvas.getContext('2d'),
 
             // Number of frequency bins/sections.
-            ø.numBins = 400,
+            ø.numBins = 300,
 
             // Rotation angle.
             ø.theta = 0,
@@ -232,7 +232,7 @@
                     mag = mags[i] || mags[i-1];
 
                 // Alternate even/odd points, for a wave effect.
-                mag = i % 2 == 0 ? mag * 0.5 : -mag * 0.5;
+                mag =  mag * 0.5;
 
                 // Straighten the beginning and ending segments.
                 if ( _p === ø.start || p === ø.end ) {
@@ -240,19 +240,19 @@
                 }
 
                 // Draw the curve.
-                ctx.bezierCurveTo(_p.x + mag *2, _p.y + mag,
-                                  p.x + mag *2, p.y + mag,
+                ctx.bezierCurveTo(_p.x + mag *4, _p.y + mag,
+                                  p.x + mag *4, p.y + mag,
                                   p.x, p.y);
             }
 
-            ctx.moveTo(ø.start.x, ø.start.y);
-            for (var i = 0; i < pCache.length + 1; i++) {
+            //ctx.moveTo(ø.start.x, ø.start.y);
+            for (var i = pCache.length - 1; i >= 0; i--) {
                 var _p  = pCache[i-1] || ø.start,
                     p   = pCache[i] || ø.end,
                     mag = mags[i] || mags[i-1];
 
                 // Alternate even/odd points, for a wave effect.
-                mag = i % 2 == 0 ? -mag * 0.5 : mag * 0.5;
+                mag = -mag * 0.5;
 
                 // Straighten the beginning and ending segments.
                 if ( _p === ø.start || p === ø.end ) {
@@ -260,8 +260,8 @@
                 }
 
                 // Draw the curve.
-                ctx.bezierCurveTo(_p.x + -mag*2, _p.y - mag,
-                                  p.x + -mag*2, p.y - mag,
+                ctx.bezierCurveTo(_p.x + mag*4, _p.y + mag,
+                                  p.x + mag*4, p.y + mag,
                                   p.x, p.y);
             }
             ctx.closePath();
