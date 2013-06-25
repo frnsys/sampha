@@ -18,15 +18,8 @@
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
+        window.aural.play();
     }, false);
-
-    // TODO change to do on load.
-    // Summoning.
-    $('.trigger').on('click', function() {
-        $('canvas').animate({ top: '0%', opacity: 1 }, 1500, function() {
-            //window.aural.play();
-        });
-    });
 
     // Audio controls
     $('.controls').on('click', '.icon-play', function() {
@@ -75,7 +68,7 @@
             ø.ctx = ø.canvas.getContext('2d'),
 
             // Number of frequency bins/sections.
-            ø.numBins = 300,
+            ø.binLength = 6,
 
             // Rotation angle.
             ø.theta = 0,
@@ -95,11 +88,8 @@
             ø.colorImg.src = "img/color.jpg";
 
             // Setup the points.
-            ø.start = new Point(ø.canvas.width/2, 0),
+            ø.start = new Point(ø.canvas.width/2, -200),
             ø.end = new Point(ø.canvas.width/2, ø.canvas.height);
-            for (var i = 0; i < ø.numBins; i++) {
-                ø.points.push( new Point() );
-            }
 
             // Get the proper requestAnimationFrame.
             // Thanks http://bit.ly/13vtjf7
@@ -123,11 +113,10 @@
                 ø.end.x = ø.canvas.width - ø.start.x;
                 ø.theta = Math.atan((mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
 
-                ø.rotatePoints(ø.theta);
+                ø.setupPoints();
                 ø.draw();
             });
 
-            ø.rotatePoints(ø.theta);
 
             // When the image is ready.
             ø.baseImg.onload = function() {
@@ -143,6 +132,33 @@
             for (var i = 0; i < ø.points.length; i++) {
                 ø.pointsCache[i] = ø.rotatePoint(ø.points[i], theta);
             }
+        }
+
+        // Setup points.
+        Visual.prototype.setupPoints = function() {
+            var ø = this,
+                dist, diff;
+            ø.start.y = -200;
+            dist = Math.sqrt( Math.pow(ø.end.x - ø.start.x,2) + Math.pow(ø.end.y - ø.start.y, 2) ),
+            diff = dist - ø.canvas.height;
+            ø.numBins = dist/ø.binLength;
+
+            ø.points = [];
+            for (var i = 0; i < ø.numBins; i++) {
+                ø.points.push( new Point() );
+            }
+
+            ø.start.y = -diff/2;
+
+            // Setup the points.
+            for (var i = 0; i < ø.points.length; i++) {
+                var p = ø.points[i],
+                    _p = ø.points[i-1] || ø.start;
+                p.x = ø.canvas.width/2;
+                p.y = _p.y + ø.binLength;
+            }
+
+            ø.rotatePoints(ø.theta);
         }
 
         // Setup the canvas for retina support.
@@ -172,20 +188,8 @@
             // Adjust the end point's y position.
             ø.end.y = canvas.height;
 
-            // Calculate the length of each bin/section.
-            //var binLength = Math.sqrt(Math.pow(ø.start.x - ø.end.x, 2) + Math.pow(ø.start.y - ø.end.y, 2))/ø.numBins;
-            var binLength = canvas.height/ø.numBins;
-
             // Setup the points.
-            for (var i = 0; i < ø.points.length; i++) {
-                var p = ø.points[i],
-                    _p = ø.points[i-1] || ø.start;
-                p.x = ø.canvas.width/2;
-                p.y = _p.y + binLength;
-            }
-
-            // Re-rotate points.
-            ø.rotatePoints(ø.theta);
+            ø.setupPoints();
 
             // Draw to reflect calibration.
             ø.draw();
