@@ -59,6 +59,10 @@
         return false;
     });
 
+    $('a:not([data-target])').on('click', function() {
+        $('.icon-pause').click();
+    });
+
 
     // Visual elements (i.e. canvas)
     var Visual = (function() {
