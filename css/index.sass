@@ -85,8 +85,6 @@ a, a:visited
     @include transition
     text-decoration: none
     color: #fff
-    &:hover
-        color: #FC4D8F
 
 
 section
@@ -147,7 +145,7 @@ section
 
 .contact
     > div
-        background: rgba(110, 226, 198, 0.5)
+        background: rgba(98, 255, 217, 0.6)
         display: inline-block
         padding: 1em 9em 1em 9em
     bottom: 4em
@@ -163,8 +161,18 @@ section
 .icon-activity
     font-size: 2em
 
+.icon-music:hover
+    @include transition
+    color: #FC4D8F
+.icon-activity:hover
+    @include transition
+    color: #BB06F8
+
 .icon-logo
+    @include transition
     font-size: 8em
     margin-top: -0.3em
     display: inline-block
+    &:hover
+        color: #00CF9D
 
