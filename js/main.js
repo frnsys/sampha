@@ -68,7 +68,7 @@
             ø.ctx = ø.canvas.getContext('2d'),
 
             // Number of frequency bins/sections.
-            ø.binLength = 6,
+            ø.binLength = 4,
 
             // Rotation angle.
             ø.theta = 0,
@@ -88,7 +88,7 @@
             ø.colorImg.src = "img/color.jpg";
 
             // Setup the points.
-            ø.start = new Point(ø.canvas.width/2, -200),
+            ø.start = new Point(ø.canvas.width/2, -50),
             ø.end = new Point(ø.canvas.width/2, ø.canvas.height);
 
             // Get the proper requestAnimationFrame.
@@ -138,7 +138,7 @@
         Visual.prototype.setupPoints = function() {
             var ø = this,
                 dist, diff;
-            ø.start.y = -200;
+            ø.start.y = -50;
             dist = Math.sqrt( Math.pow(ø.end.x - ø.start.x,2) + Math.pow(ø.end.y - ø.start.y, 2) ),
             diff = dist - ø.canvas.height;
             ø.numBins = dist/ø.binLength;
@@ -149,7 +149,7 @@
                 ø.points.push( new Point() );
             }
 
-            ø.start.y = -diff/2;
+            ø.start.y = -diff;
 
             // Setup the points.
             for (var i = 0; i < ø.points.length; i++) {
