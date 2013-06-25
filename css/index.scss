@@ -41,7 +41,7 @@ canvas {
 
 }
 .controls {
-    font-size:2em;
+    font-size:1.4em;
     span {
         cursor:pointer;
     }
@@ -83,24 +83,12 @@ section {
         max-width:100%;
     }
 }
-h3 {
-    background:#c255e6;
-    background:rgba(194,85,230,0.6);
-    font-size:1em;
-    padding:0.2em 0;
-    background: -moz-linear-gradient(-45deg,  rgba(116,51,138,0.8) 0%, rgba(252,77,143,0.8) 100%);
-    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(116,51,138,0.8)), color-stop(100%,rgba(252,77,143,0.8)));
-    background: -webkit-linear-gradient(-45deg,  rgba(116,51,138,0.8) 0%,rgba(252,77,143,0.8) 100%);
-    background: -o-linear-gradient(-45deg,  rgba(116,51,138,0.8) 0%,rgba(252,77,143,0.8) 100%);
-    background: -ms-linear-gradient(-45deg,  rgba(116,51,138,0.8) 0%,rgba(252,77,143,0.8) 100%);
-    background: linear-gradient(135deg,  rgba(116,51,138,0.8) 0%,rgba(252,77,143,0.8) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc74338a', endColorstr='#ccfc4d8f',GradientType=1 );
-}
 
 .releases {
+    background:rgba(252,77,137,0.3);
     h6 {
         margin:1.8em 0 0.4em 0;
-        border-bottom:1px solid #fc4d8f;
+        border-bottom:1px solid rgba(200,200,200,0.4);
         position:relative;
         .icon-link {
             right:0.4em !important;
@@ -129,27 +117,28 @@ h3 {
 }
 .activity {
     right:0;
+    background:rgba(116, 51, 138, 0.5);
 
     ol {
         padding:0;
         li {
             margin: 2em 0;
             padding:0 0 2em 0;
-            border-bottom:1px solid #fc4d8f;
+            border-bottom:1px solid rgba(200,200,200,0.4);
         }
     }
 }
 
 .contact {
+    > div {
+        background:rgba(110, 226, 198, 0.5);
+        display:inline-block;
+        padding:0 9em 2em 9em;
+    }
     bottom:6em;
     width:100%;
     max-width:none;
     text-align:center;
-    h3 {
-        display:inline-block;
-        padding:0 9em;
-    }
-
     li {
         display:inline-block;
         margin:0 0.4em;
