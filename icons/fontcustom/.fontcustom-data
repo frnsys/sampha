@@ -1,0 +1,22 @@
+{
+  "fonts": [
+    "fontcustom_de39937afaca01b95c4b8227a73b3a19.ttf",
+    "fontcustom_de39937afaca01b95c4b8227a73b3a19.woff",
+    "fontcustom_de39937afaca01b95c4b8227a73b3a19.eot",
+    "fontcustom_de39937afaca01b95c4b8227a73b3a19.svg"
+  ],
+  "templates": [
+    "fontcustom.css",
+    "fontcustom-preview.html"
+  ],
+  "file_name": "fontcustom_de39937afaca01b95c4b8227a73b3a19",
+  "glyphs": [
+    "activity",
+    "close",
+    "link",
+    "logo",
+    "music",
+    "pause",
+    "play"
+  ]
+}

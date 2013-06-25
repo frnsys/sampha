@@ -1,0 +1,156 @@
+/* ==========================================
+	 Load Atomic
+	 ========================================== */
+
+// Configure Atomic in _atomic.scss
+@import "atomic";
+
+/* ==========================================
+	 Your Styles
+	 ========================================== */
+
+html, body {
+    width:100%;
+    height:100%;
+    background:#000;
+    overflow:hidden;
+    /*font-family:'monaco', 'courier new', 'monospace';*/
+    font-family: 'ff-basic-gothic-web-pro', 'Helvetica Neue', 'sans-serif';
+}
+
+canvas {
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+.logo {
+    margin-top:10%;
+    width:400px;
+}
+
+.nav,
+.controls {
+    z-index:10;
+    position:relative;
+    color:#fff;
+    text-align:center;
+    padding:0.5em;
+
+}
+.controls {
+    font-size:1.4em;
+    span {
+        cursor:pointer;
+    }
+}
+.nav {
+    font-size:0.8em;
+    padding:0.5em 2em;
+    height:4em;
+    position:absolute;
+    bottom:1em;
+    width:100%;
+    li { display:inline-block; }
+    li:first-child { float:left; }
+    li:last-child { float:right; }
+}
+
+a, a:visited {
+    @include transition;
+    text-decoration:none;
+    color:#fff;
+    &:hover {
+        color:#FC4D8F;
+    }
+}
+
+section {
+    display:none;
+    z-index:10;
+    position:absolute;
+    color:#fff;
+    font-size:0.8em;
+    padding:1em;
+    max-width:400px;
+    max-height:80%;
+    overflow-y:scroll;
+    overflow-x:hidden;
+
+    img, iframe {
+        max-width:100%;
+    }
+}
+
+.releases {
+    background:rgba(252,77,137,0.3);
+    h6 {
+        margin:1.8em 0 0.4em 0;
+        border-bottom:1px solid rgba(200,200,200,0.4);
+        position:relative;
+        .icon-link {
+            right:0.4em !important;
+            margin-top:-0.1em;
+        }
+    }
+    > ul {
+        margin-bottom:4em;
+    }
+    .release {
+        margin:0 0 1.2em 0;
+        ul {
+            position:relative;
+        }
+        li {
+            letter-spacing:0.4em;
+            margin:0 0 0.2em 2em;
+        }
+        .icon-link {
+            vertical-align:middle;
+            position:absolute;
+            right:0;
+            opacity:0.6;
+        }
+    }
+}
+.activity {
+    right:0;
+    background:rgba(116, 51, 138, 0.5);
+
+    ol {
+        padding:0;
+        li {
+            margin: 2em 0;
+            padding:0 0 2em 0;
+            border-bottom:1px solid rgba(200,200,200,0.4);
+        }
+    }
+}
+
+.contact {
+    > div {
+        background:rgba(110, 226, 198, 0.5);
+        display:inline-block;
+        padding:0 9em 2em 9em;
+    }
+    bottom:6em;
+    width:100%;
+    max-width:none;
+    text-align:center;
+    li {
+        display:inline-block;
+        margin:0 0.4em;
+    }
+}
+
+.icon-music,
+.icon-activity {
+    font-size:2em;
+}
+.icon-logo {
+    font-size:8em;
+    margin-top:-0.3em;
+    display:inline-block;
+}
