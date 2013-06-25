@@ -34,8 +34,9 @@ html, body
     height: 100%
     background: #000
     overflow: hidden
-    /*font-family: 'monaco', 'courier new', 'monospace'*/
-    font-family:  'ff-basic-gothic-web-pro', 'Helvetica Neue', 'sans-serif'
+    font-family: 'courier new', 'monospace'
+    font-size: 0.95em
+    //font-family:  'ff-basic-gothic-web-pro', 'Helvetica Neue', 'sans-serif'
 
 
 canvas
@@ -100,12 +101,15 @@ section
     overflow-y: scroll
     overflow-x: hidden
 
+    h3, h6
+        font-weight: normal
     img, iframe
         max-width: 100%
 
 
 .releases
-    background: rgba(252,77,137,0.3)
+    background: rgba(255, 50, 132, 0.6)
+    width: 400px
     h6
         margin: 1.8em 0 0.4em 0
         border-bottom: 1px solid rgba(200,200,200,0.4)
@@ -130,7 +134,8 @@ section
 
 .activity
     right: 0
-    background: rgba(116, 51, 138, 0.5)
+    width: 400px
+    background: rgba(192, 6, 255, 0.5)
 
     ol
         padding: 0
@@ -144,7 +149,7 @@ section
     > div
         background: rgba(110, 226, 198, 0.5)
         display: inline-block
-        padding: 0 9em 2em 9em
+        padding: 1em 9em 1em 9em
     bottom: 6em
     width: 100%
     max-width: none
