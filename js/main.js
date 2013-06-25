@@ -144,6 +144,7 @@
             ø.numBins = dist/ø.binLength;
 
             ø.points = [];
+            ø.pointsCache = [];
             for (var i = 0; i < ø.numBins; i++) {
                 ø.points.push( new Point() );
             }
@@ -241,6 +242,8 @@
                     x_len = 0,
                     _ctrl.y = _p.y,
                     ctrl.y = p.y;
+                    _ctrl.x = _p.x,
+                    ctrl.x = p.x;
                 } else {
                     // Theta needs to be shifted by π/2,
                     // and then our target angle is
@@ -248,11 +251,9 @@
                     angle = (Math.PI/2) - (ø.theta + (Math.PI/2)),
                     _ctrl.y = _p.y - (Math.tan(angle) * x_len),
                     ctrl.y = p.y - (Math.tan(angle) * x_len);
+                    _ctrl.x = _p.x + x_len,
+                    ctrl.x = p.x + x_len;
                 }
-
-                _ctrl.x = _p.x + x_len,
-                ctrl.x = p.x + x_len;
-
 
                 // Draw the curve.
                 ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
@@ -260,15 +261,15 @@
                                   p.x, p.y);
             }
 
-            for (var i = pCache.length - 1; i >= 0; i--) {
-                var _p  = pCache[i-1] || ø.start,
-                    p   = pCache[i] || ø.end,
+            for (var i = pCache.length; i >= 0; i--) {
+                var _p  = pCache[i] || ø.end,
+                    p   = pCache[i-1] || ø.start,
                     mag = mags[i] || mags[i-1],
                     x_len = mag,
                     _ctrl = {}, ctrl = {}, angle;
 
                 // Straighten the beginning and ending segments.
-                if ( _p === ø.start || p === ø.end ) {
+                if ( p === ø.start || _p === ø.end ) {
                     x_len = 0,
                     _ctrl.y = _p.y,
                     ctrl.y = p.y;
@@ -281,9 +282,8 @@
                     ctrl.y = p.y + (Math.tan(angle) * x_len);
                 }
 
-                _ctrl.x = _p.x - x_len,
-                ctrl.x = p.x - x_len;
-
+                    _ctrl.x = _p.x - x_len,
+                    ctrl.x = p.x - x_len;
                 // Draw the curve.
                 ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
                                   ctrl.x, ctrl.y,
