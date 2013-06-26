@@ -18,7 +18,7 @@
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
-        window.aural.play();
+        //window.aural.play();
     }, false);
 
     // Audio controls
