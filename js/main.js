@@ -139,9 +139,10 @@
             var ø = this,
                 dist, diff;
             ø.start.y = -50;
+            ø.end.y = ø.canvas.height;
             dist = Math.sqrt( Math.pow(ø.end.x - ø.start.x,2) + Math.pow(ø.end.y - ø.start.y, 2) ),
             diff = dist - ø.canvas.height;
-            ø.numBins = dist/ø.binLength;
+            ø.numBins = dist + (1.2*diff)/ø.binLength;
 
             ø.points = [];
             ø.pointsCache = [];
@@ -149,7 +150,8 @@
                 ø.points.push( new Point() );
             }
 
-            ø.start.y = -diff;
+            ø.start.y = -diff/1.2;
+            ø.end.y = ø.canvas.height + diff/1.2;
 
             // Setup the points.
             for (var i = 0; i < ø.points.length; i++) {
