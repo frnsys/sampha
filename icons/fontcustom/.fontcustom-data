@@ -1,15 +1,15 @@
 {
   "fonts": [
-    "fontcustom_de39937afaca01b95c4b8227a73b3a19.ttf",
-    "fontcustom_de39937afaca01b95c4b8227a73b3a19.woff",
-    "fontcustom_de39937afaca01b95c4b8227a73b3a19.eot",
-    "fontcustom_de39937afaca01b95c4b8227a73b3a19.svg"
+    "fontcustom_bdc6c5910f90bd1dbac81c30436bc45a.ttf",
+    "fontcustom_bdc6c5910f90bd1dbac81c30436bc45a.woff",
+    "fontcustom_bdc6c5910f90bd1dbac81c30436bc45a.eot",
+    "fontcustom_bdc6c5910f90bd1dbac81c30436bc45a.svg"
   ],
   "templates": [
     "fontcustom.css",
     "fontcustom-preview.html"
   ],
-  "file_name": "fontcustom_de39937afaca01b95c4b8227a73b3a19",
+  "file_name": "fontcustom_bdc6c5910f90bd1dbac81c30436bc45a",
   "glyphs": [
     "activity",
     "close",
