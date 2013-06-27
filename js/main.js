@@ -15,6 +15,19 @@
 
 (function() {
 
+    $('.icon-logo').on('mouseenter', function() {
+        $(this).closest('li').fadeOut();
+        $('.contact').animate({
+            bottom: 0
+        });
+    });
+    $('.contact').on('mouseleave', function() {
+        $('.icon-logo').closest('li').fadeIn();
+        $('.contact').animate({
+            bottom: '-9em'
+        });
+    });
+
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
@@ -39,11 +52,6 @@
     $('[data-target=releases]').on('click', function(e) {
         e.preventDefault();
         $('.releases').fadeToggle();
-        return false;
-    });
-    $('[data-target=contact]').on('click', function(e) {
-        e.preventDefault();
-        $('.contact').fadeToggle();
         return false;
     });
     $('[data-target=activity]').on('click', function(e) {
