@@ -98,7 +98,8 @@ section
     max-height: 80%
     overflow-y: scroll
     overflow-x: hidden
-
+    a, a:visited
+        text-decoration: underline
     h3, h6
         font-weight: normal
     img, iframe
@@ -109,8 +110,6 @@ section
     border: 1px solid #C34166
     border-left: none
     width: 400px
-    a, a:visited
-        text-decoration: underline
     h6
         margin: 1.8em 0 0.4em 0
         border-bottom: 1px solid #C34166
@@ -133,6 +132,10 @@ section
             position: absolute
             right: 0
             opacity: 0.6
+    .icon-close
+        right: 4em
+        &:hover
+            color: #C34166
 
 .activity
     right: 0
@@ -141,7 +144,10 @@ section
     border-right: none
     h3
         text-align: right
-
+    .icon-close
+        left: 4em
+        &:hover
+            color: #7D65D7
     ol
         padding: 0
         li
@@ -161,7 +167,7 @@ section
     max-width: none
     text-align: center
     display: block
-    z-index: 100 !important
+    z-index: 100
     li
         display: inline-block
         margin: 0 0.4em
@@ -187,3 +193,9 @@ section
         color: #00CF9D
 .now-playing
     margin-top: 1em
+
+.icon-close
+    @include transition
+    position: absolute
+    top: 4em
+    cursor: pointer

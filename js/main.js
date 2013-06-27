@@ -15,19 +15,6 @@
 
 (function() {
 
-    $('.icon-logo').on('mouseenter', function() {
-        $(this).closest('li').fadeOut();
-        $('.contact').animate({
-            bottom: 0
-        });
-    });
-    $('.contact').on('mouseleave', function() {
-        $('.icon-logo').closest('li').fadeIn();
-        $('.contact').animate({
-            bottom: '-9em'
-        });
-    });
-
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
@@ -59,7 +46,25 @@
         $('.activity').fadeToggle();
         return false;
     });
+    $('.icon-close').on('click', function() {
+        $(this).parent().fadeToggle();
+    });
 
+    // Sampha logo/contact reveal
+    $('.icon-logo').on('mouseenter', function() {
+        $(this).closest('li').fadeOut();
+        $('.contact').animate({
+            bottom: 0
+        });
+    });
+    $('.contact').on('mouseleave', function() {
+        $('.icon-logo').closest('li').fadeIn();
+        $('.contact').animate({
+            bottom: '-9em'
+        });
+    });
+
+    // External links pause the track.
     $('a:not([data-target])').on('click', function() {
         $('.icon-pause').click();
     });
