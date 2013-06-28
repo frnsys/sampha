@@ -411,7 +411,7 @@
             }
 
             // Setup the new track.
-            ø.setup('endless_fantasy');
+            ø.setup('track_2');
 
             // Play!
             ø.audio.play();
