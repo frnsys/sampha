@@ -15,6 +15,11 @@
 
 (function() {
 
+    var playlist = [
+        'indecision',
+        'track_2'
+    ];
+
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
@@ -326,6 +331,9 @@
         function Aural() {
             var ø    = this;
 
+            // Keep track of which track we are on.
+            ø.current_track = 0;
+
             // Create the visualizer.
             ø.visual = new Visual();
 
@@ -346,7 +354,7 @@
             ø.analyser.connect(ø.audioCtx.destination);
 
             // Set up the audio
-            ø.setup('indecision');
+            ø.setup(playlist[ø.current_track]);
 
             // Start the frequency detection and visualization.
             ø.visualize();
@@ -410,11 +418,17 @@
                 ø.audio.pause();
             }
 
-            // Setup the new track.
-            ø.setup('track_2');
+            // If we are not at the end of the playlist...
+            if ( ø.current_track < playlist.length - 1 ) {
+                ø.current_track++;
 
-            // Play!
-            ø.audio.play();
+                // Setup the new track.
+                ø.setup(playlist[ø.current_track]);
+
+                // Play!
+                ø.audio.play();
+            }
+
         }
 
         return Aural;
