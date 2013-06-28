@@ -51,16 +51,16 @@
     });
 
     // Sampha logo/contact reveal
-    $('.icon-logo').on('mouseenter', function() {
-        $(this).closest('li').fadeOut();
+    $('.contact-trigger').on('mouseenter', function() {
+        $('.icon-logo').addClass('on');
         $('.contact').animate({
             bottom: 0
         });
     });
     $('.contact').on('mouseleave', function() {
-        $('.icon-logo').closest('li').fadeIn();
+        $('.icon-logo').removeClass('on');
         $('.contact').animate({
-            bottom: '-9em'
+            bottom: '-14em'
         });
     });
 

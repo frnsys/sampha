@@ -75,6 +75,7 @@ canvas
     width: 100%
     li
         display: inline-block
+        position: relative
     li:first-child
         float: left
     li:last-child
@@ -167,9 +168,9 @@ $contact-color: #00CF9D
     > div
         border: 1px solid $contact-color
         display: inline-block
-        padding: 2em 9em 2em 9em
-        height: 7em
-    bottom: -9em
+        padding: 8em 9em 2em 9em
+        height: 12em
+    bottom: -14em
     width: 100%
     height: auto
     max-width: none
@@ -197,7 +198,7 @@ $contact-color: #00CF9D
     font-size: 15em
     margin-top: -0.75em
     display: inline-block
-    &:hover
+    &:hover, &.on
         color: $contact-color
 .now-playing
     margin-top: 1em
@@ -207,3 +208,9 @@ $contact-color: #00CF9D
     position: absolute
     top: 2em
     cursor: pointer
+
+.contact-trigger
+    position: absolute
+    width: 100%
+    height: 6em
+    top: -7em
