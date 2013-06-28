@@ -93,26 +93,31 @@ section
     position: absolute
     color: #fff
     font-size: 0.8em
-    padding: 2em 4em
+    //padding: 2em 4em
     max-width: 400px
     max-height: 80%
-    overflow-y: scroll
-    overflow-x: hidden
-    a, a:visited
-        text-decoration: underline
+    height: 100%
+    overflow: hidden
+    > div
+        padding: 2em 4em
+        height: 100%
+        overflow-y: scroll
+    a:hover
+        color: #00CF9D
     h3, h6
         font-weight: normal
     img, iframe
         max-width: 100%
 
 
+$releases-color: #C34166
 .releases
-    border: 1px solid #C34166
+    border: 1px solid $releases-color
     border-left: none
     width: 400px
     h6
         margin: 1.8em 0 0.4em 0
-        border-bottom: 1px solid #C34166
+        border-bottom: 1px dotted $releases-color
         position: relative
         .icon-link
             right: 0.4em !important
@@ -133,37 +138,40 @@ section
             right: 0
             opacity: 0.6
     .icon-close
-        right: 4em
+        right: 2em
         &:hover
-            color: #C34166
+            color: $releases-color
 
+$activity-color: #7D65D7
 .activity
     right: 0
     width: 400px
-    border: 1px solid #7D65D7
+    border: 1px solid $activity-color
     border-right: none
     h3
         text-align: right
     .icon-close
-        left: 4em
+        left: 2em
         &:hover
-            color: #7D65D7
+            color: $activity-color
     ol
         padding: 0
         li
             margin:  2em 0
             padding: 0 0 2em 0
-            border-bottom: 1px solid #7D65D7
+            border-bottom: 1px dotted $activity-color
 
 
+$contact-color: #00CF9D
 .contact
     > div
-        background: rgba(98, 255, 217, 0.6)
+        border: 1px solid $contact-color
         display: inline-block
         padding: 2em 9em 2em 9em
         height: 7em
     bottom: -9em
     width: 100%
+    height: auto
     max-width: none
     text-align: center
     display: block
@@ -179,10 +187,10 @@ section
 
 .icon-music:hover
     @include transition
-    color: #FC4D8F
+    color: $releases-color
 .icon-activity:hover
     @include transition
-    color: #BB06F8
+    color: $activity-color
 
 .icon-logo
     @include transition
@@ -190,12 +198,12 @@ section
     margin-top: -0.75em
     display: inline-block
     &:hover
-        color: #00CF9D
+        color: $contact-color
 .now-playing
     margin-top: 1em
 
 .icon-close
     @include transition
     position: absolute
-    top: 4em
+    top: 2em
     cursor: pointer

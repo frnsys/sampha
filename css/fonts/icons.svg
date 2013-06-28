@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <!--
-2013-6-26: Created.
+2013-6-28: Created.
 -->
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Wed Jun 26 15:27:12 2013
+Created by FontForge 20120731 at Fri Jun 28 11:53:35 2013
  By Francis Tseng
 Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
 </metadata>
@@ -19,7 +19,7 @@ Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
     panose-1="2 0 6 9 0 0 0 0 0 0"
     ascent="448"
     descent="-64"
-    bbox="20.9338 -39.2549 490.922 423.536"
+    bbox="20.9338 -37.7578 490.922 423.536"
     underline-thickness="25.6"
     underline-position="-51.2"
     unicode-range="U+F100-F106"
@@ -28,7 +28,7 @@ Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
     <glyph glyph-name="uniF100" unicode="&#xf100;" 
 d="M71.7969 8.43945v368.005h368.006v-368.005h-368.006z" />
     <glyph glyph-name="uniF101" unicode="&#xf101;" 
-d="M487.255 322.785l-130.788 -130.788l130.786 -130.785l-100.468 -100.467l-130.785 130.785l-130.785 -130.785l-100.468 100.467l130.786 130.785l-130.786 130.788l100.465 100.468l130.788 -130.788l130.788 130.788z" />
+d="M464.172 345.866l-153.866 -153.866l153.866 -153.866l-54.3057 -54.3057l-153.866 153.866l-153.866 -153.866l-54.3057 54.3057l153.866 153.866l-153.866 153.866l54.3057 54.3057l153.866 -153.866l153.866 153.866z" />
     <glyph glyph-name="uniF102" unicode="&#xf102;" 
 d="M452.746 187.232l-355.221 211.258v-411.134zM174.325 263.46l125.079 -74.3877l-125.079 -70.3789v144.767z" />
     <glyph glyph-name="uniF103" unicode="&#xf103;" 
