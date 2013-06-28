@@ -325,7 +325,8 @@
 
         function Aural() {
             var ø    = this;
-            ø.audio  = document.getElementById('audio');
+
+            // Create the visualizer.
             ø.visual = new Visual();
 
             // Try to setup the AudioContext, if supported.
@@ -335,23 +336,43 @@
                 return false;
             }
 
-            // Create the audio context, analyser,
-            // and source from the <audio> element.
-            var audioCtx = new AudioContext(),
-                src      = audioCtx.createMediaElementSource(ø.audio);
-            ø.analyser   = audioCtx.createAnalyser();
+            // Create the audio context and analyser.
+            ø.audioCtx = new AudioContext();
+            ø.analyser = ø.audioCtx.createAnalyser();
+
+            // Connect analyser ==> output,
+            // i.e. analyser output to the audio context's destination,
+            // i.e. the speakers.
+            ø.analyser.connect(ø.audioCtx.destination);
+
+            // Set up the audio
+            ø.setup('indecision');
+
+            // Start the frequency detection and visualization.
+            ø.visualize();
+        }
+
+        Aural.prototype.setup = function(filename) {
+            var ø = this;
+
+            // Create a new audio element.
+            ø.audio = new Audio();
+            if (ø.audio.canPlayType('audio/mpeg')) {
+                ø.audio.src = filename+'.mp3';
+            } else {
+                ø.audio.src = filename+'.ogg';
+            }
+            ø.audio.load();
+
+            // Create the source.
+            var src = ø.audioCtx.createMediaElementSource(ø.audio);
 
             // Connect src ==> analyser,
             // i.e. src output into analyser's input.
             src.connect(ø.analyser);
 
-            // Connect analyser ==> output,
-            // i.e. analyser output to the audio context's destination,
-            // i.e. the speakers.
-            ø.analyser.connect(audioCtx.destination);
-
-            // Start the frequency detection and visualization.
-            ø.visualize();
+            // Bind next track to the ending of this track.
+            ø.audio.addEventListener('ended', ø.next, false);
         }
 
         Aural.prototype.visualize = function() {
@@ -377,6 +398,21 @@
 
         Aural.prototype.pause = function() {
             this.audio.pause();
+        }
+
+        Aural.prototype.next = function() {
+            var ø = this;
+
+            // Pause the current audio.
+            if (ø.audio) {
+                ø.audio.pause();
+            }
+
+            // Setup the new track.
+            ø.setup('endless_fantasy');
+
+            // Play!
+            ø.audio.play();
         }
 
         return Aural;
