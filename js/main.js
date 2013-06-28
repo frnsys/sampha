@@ -372,7 +372,9 @@
             src.connect(ø.analyser);
 
             // Bind next track to the ending of this track.
-            ø.audio.addEventListener('ended', ø.next, false);
+            ø.audio.addEventListener('ended', ø.next.bind(ø), false);
+
+            $('.now-playing').html('now playing... \'' + filename.replace(/_/g, ' ') + '\'');
         }
 
         Aural.prototype.visualize = function() {
