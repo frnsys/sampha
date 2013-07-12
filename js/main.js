@@ -23,7 +23,6 @@
     // On load, setup the audio.
     window.addEventListener('load', function() {
         window.aural = new Aural();
-        //window.aural.play();
     }, false);
 
     // Audio controls
@@ -262,7 +261,7 @@
                     p   = pCache[i] || ø.end,
                     mag = mags[i] || mags[i-1],
                     x_len = mag,
-                    _ctrl = {}, ctrl = {}, angle;
+                    _ctrl = {}, ctrl = {}, ymod;
 
                 // Straighten the beginning and ending segments.
                 if ( _p === ø.start || p === ø.end ) {
@@ -275,9 +274,10 @@
                     // Theta needs to be shifted by π/2,
                     // and then our target angle is
                     // π/2 - the adjusted theta.
-                    angle = (Math.PI/2) - (ø.theta + (Math.PI/2)),
-                    _ctrl.y = _p.y - (Math.tan(angle) * x_len),
-                    ctrl.y = p.y - (Math.tan(angle) * x_len);
+                    // note: the angle is (Math.PI/2) - (ø.theta + Math.PI/2)
+                    ymod = Math.tan((Math.PI/2) - (ø.theta + (Math.PI/2))) * x_len,
+                    _ctrl.y = _p.y - ymod,
+                    ctrl.y = p.y - ymod;
                     _ctrl.x = _p.x + x_len,
                     ctrl.x = p.x + x_len;
                 }
@@ -304,9 +304,10 @@
                     // Theta needs to be shifted by π/2,
                     // and then our target angle is
                     // π/2 - the adjusted theta.
-                    angle = (Math.PI/2) - (ø.theta + (Math.PI/2)),
-                    _ctrl.y = _p.y + (Math.tan(angle) * x_len),
-                    ctrl.y = p.y + (Math.tan(angle) * x_len);
+                    // note: the angle is (Math.PI/2) - (ø.theta + Math.PI/2)
+                    ymod = Math.tan((Math.PI/2) - (ø.theta + (Math.PI/2))) * x_len,
+                    _ctrl.y = _p.y + ymod,
+                    ctrl.y = p.y + ymod;
                 }
 
                     _ctrl.x = _p.x - x_len,
@@ -362,9 +363,6 @@
 
             // Set up the audio
             ø.setup(playlist[ø.current_track]);
-
-            // Start the frequency detection and visualization.
-            ø.visualize();
         }
 
         Aural.prototype.setup = function(filename) {
@@ -373,9 +371,9 @@
             // Create a new audio element.
             ø.audio = new Audio();
             if (ø.audio.canPlayType('audio/mpeg')) {
-                ø.audio.src = filename+'.mp3';
+                ø.audio.src = 'audio/' + filename + '.mp3';
             } else {
-                ø.audio.src = filename+'.ogg';
+                ø.audio.src = 'audio/' + filename + '.ogg';
             }
             ø.audio.load();
 
@@ -396,7 +394,7 @@
             var ø = this;
 
             // Call this on each new frame.
-            window.requestAnimationFrame(ø.visualize.bind(ø));
+            ø.animation = window.requestAnimationFrame(ø.visualize.bind(ø));
 
             // Get frequency data
             var freqByteData = new Uint8Array(ø.analyser.frequencyBinCount);
@@ -411,10 +409,13 @@
 
         Aural.prototype.play = function() {
             this.audio.play();
+            this.visualize();
         }
 
         Aural.prototype.pause = function() {
             this.audio.pause();
+            window.cancelAnimationFrame(this.animation);
+            this.animation = undefined;
         }
 
         Aural.prototype.next = function() {
@@ -422,7 +423,7 @@
 
             // Pause the current audio.
             if (ø.audio) {
-                ø.audio.pause();
+                ø.pause();
             }
 
             // If we are not at the end of the playlist...
@@ -433,13 +434,13 @@
                 ø.setup(playlist[ø.current_track]);
 
                 // Play!
-                ø.audio.play();
+                ø.play();
             }
-
         }
 
         return Aural;
     })();
+
 
 
     // Point object
