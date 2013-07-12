@@ -409,7 +409,9 @@
 
         Aural.prototype.play = function() {
             this.audio.play();
-            this.visualize();
+            if (window.AudioContext != null) {
+                this.visualize();
+            }
         }
 
         Aural.prototype.pause = function() {
