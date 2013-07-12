@@ -22,6 +22,11 @@
 
     // On load, setup the audio.
     window.addEventListener('load', function() {
+        // Try to setup the AudioContext, if supported.
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (window.AudioContext == null) {
+            alert("The Web Audio API is not yet supported by your browser. For the full experience, please use the latest Chrome or Safari.");
+        }
         window.aural = new Aural();
     }, false);
 
@@ -120,6 +125,7 @@
             var vendors = ['ms','moz','webkit','o'];
             for (var i = 0; i < vendors.length && !window.requestAnimationFrame; i++) {
                 window.requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
+                window.cancelAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
             }
 
             // Setup devicePixelRatio.
@@ -345,21 +351,16 @@
             // Create the visualizer.
             ø.visual = new Visual();
 
-            // Try to setup the AudioContext, if supported.
-            window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (window.AudioContext == null) {
-                alert("The Web Audio API is not yet supported by your browser. Please use the latest Chrome or Safari.");
-                return false;
+            if (window.AudioContext != null) {
+                // Create the audio context and analyser.
+                ø.audioCtx = new AudioContext();
+                ø.analyser = ø.audioCtx.createAnalyser();
+
+                // Connect analyser ==> output,
+                // i.e. analyser output to the audio context's destination,
+                // i.e. the speakers.
+                ø.analyser.connect(ø.audioCtx.destination);
             }
-
-            // Create the audio context and analyser.
-            ø.audioCtx = new AudioContext();
-            ø.analyser = ø.audioCtx.createAnalyser();
-
-            // Connect analyser ==> output,
-            // i.e. analyser output to the audio context's destination,
-            // i.e. the speakers.
-            ø.analyser.connect(ø.audioCtx.destination);
 
             // Set up the audio
             ø.setup(playlist[ø.current_track]);
@@ -377,12 +378,14 @@
             }
             ø.audio.load();
 
-            // Create the source.
-            var src = ø.audioCtx.createMediaElementSource(ø.audio);
+            if (window.AudioContext != null) {
+                // Create the source.
+                var src = ø.audioCtx.createMediaElementSource(ø.audio);
 
-            // Connect src ==> analyser,
-            // i.e. src output into analyser's input.
-            src.connect(ø.analyser);
+                // Connect src ==> analyser,
+                // i.e. src output into analyser's input.
+                src.connect(ø.analyser);
+            }
 
             // Bind next track to the ending of this track.
             ø.audio.addEventListener('ended', ø.next.bind(ø), false);
@@ -416,8 +419,10 @@
 
         Aural.prototype.pause = function() {
             this.audio.pause();
-            window.cancelAnimationFrame(this.animation);
-            this.animation = undefined;
+            if (this.animation) {
+                window.cancelAnimationFrame(this.animation);
+                this.animation = undefined;
+            }
         }
 
         Aural.prototype.next = function() {
