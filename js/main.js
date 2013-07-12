@@ -20,6 +20,12 @@
         'track_2'
     ];
 
+    function isMobile() {
+        // Treat mobile/tablet devices differently.
+        var mobileBreakpoint = 768;
+        return $(window).width() < mobileBreakpoint
+    }
+
     // On load, setup the audio.
     window.addEventListener('load', function() {
         // Try to setup the AudioContext, if supported.
@@ -48,11 +54,17 @@
     $('[data-target=releases]').on('click', function(e) {
         e.preventDefault();
         $('.releases').fadeToggle();
+        if ( isMobile() ) {
+            $('.activity').fadeOut();
+        }
         return false;
     });
     $('[data-target=activity]').on('click', function(e) {
         e.preventDefault();
         $('.activity').fadeToggle();
+        if ( isMobile() ) {
+            $('.releases').fadeOut();
+        }
         return false;
     });
     $('.icon-close').on('click', function() {
@@ -65,6 +77,19 @@
         $('.contact').animate({
             bottom: 0
         });
+    });
+    $('.contact-trigger').on('click', function() {
+        if ( $('.icon-logo').hasClass('on') ) {
+            $('.icon-logo').removeClass('on');
+            $('.contact').animate({
+                bottom: '-14em'
+            });
+        } else {
+            $('.icon-logo').addClass('on');
+            $('.contact').animate({
+                bottom: 0
+            });
+        }
     });
     $('.contact').on('mouseleave', function() {
         $('.icon-logo').removeClass('on');
@@ -137,14 +162,16 @@
 
             // Bind polygon shapes to horizontal mouse movement.
             $(window).on('mousemove', function(e){
-                // Calculate theta.
-                var mouse_x = e.pageX * window.devicePixelRatio;
-                ø.start.x = e.pageX * window.devicePixelRatio,
-                ø.end.x = ø.canvas.width - ø.start.x;
-                ø.theta = Math.atan((mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
+                if ( !isMobile() ) {
+                    // Calculate theta.
+                    var mouse_x = e.pageX * window.devicePixelRatio;
+                    ø.start.x = e.pageX * window.devicePixelRatio,
+                    ø.end.x = ø.canvas.width - ø.start.x;
+                    ø.theta = Math.atan((mouse_x - (ø.canvas.width/2)) / (ø.canvas.height/2));
 
-                ø.setupPoints();
-                ø.draw();
+                    ø.setupPoints();
+                    ø.draw();
+                }
             });
 
 
