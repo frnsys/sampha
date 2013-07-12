@@ -69,6 +69,13 @@
         });
     });
 
+    // Release dropdowns
+    $('.release').on('mouseenter', function() {
+        $(this).find('ul').slideDown();
+    }).on('mouseleave', function() {
+        $(this).find('ul').slideUp();
+    });
+
     // External links pause the track.
     $('a:not([data-target])').on('click', function() {
         $('.icon-pause').click();
