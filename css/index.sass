@@ -175,6 +175,7 @@ $contact-color: #00CF9D
         padding: 8em 9em 2em 9em
         height: 12em
         overflow: hidden
+        position: relative
     bottom: -14em
     width: 100%
     height: auto
@@ -205,8 +206,21 @@ $contact-color: #00CF9D
     display: inline-block
     &:hover, &.on
         color: $contact-color
+
 .now-playing
     margin-top: 1em
+
+.icon-prev, .icon-next
+    font-size: 2em
+    position: absolute
+    top: 2em
+    cursor: pointer
+    &:hover
+        color: $contact-color
+.icon-prev
+    left: 1em
+.icon-next
+    right: 1em
 
 .icon-close
     @include transition

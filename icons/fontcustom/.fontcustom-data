@@ -1,22 +1,24 @@
 {
   "fonts": [
-    "fontcustom_e0b486ba0cf52ced7465b75a8293424a.ttf",
-    "fontcustom_e0b486ba0cf52ced7465b75a8293424a.woff",
-    "fontcustom_e0b486ba0cf52ced7465b75a8293424a.eot",
-    "fontcustom_e0b486ba0cf52ced7465b75a8293424a.svg"
+    "fontcustom_c564fb427cf407ec83cf8f3edfe91091.ttf",
+    "fontcustom_c564fb427cf407ec83cf8f3edfe91091.woff",
+    "fontcustom_c564fb427cf407ec83cf8f3edfe91091.eot",
+    "fontcustom_c564fb427cf407ec83cf8f3edfe91091.svg"
   ],
   "templates": [
     "fontcustom.css",
     "fontcustom-preview.html"
   ],
-  "file_name": "fontcustom_e0b486ba0cf52ced7465b75a8293424a",
+  "file_name": "fontcustom_c564fb427cf407ec83cf8f3edfe91091",
   "glyphs": [
     "activity",
     "close",
     "link",
     "logo",
     "music",
+    "next",
     "pause",
-    "play"
+    "play",
+    "prev"
   ]
 }

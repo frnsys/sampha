@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <!--
-2013-6-28: Created.
+2013-7-12: Created.
 -->
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Fri Jun 28 11:53:35 2013
+Created by FontForge 20120731 at Fri Jul 12 20:08:50 2013
  By Francis Tseng
 Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
 </metadata>
@@ -19,10 +19,10 @@ Created by Francis Tseng with FontForge 2.0 (http://fontforge.sf.net)
     panose-1="2 0 6 9 0 0 0 0 0 0"
     ascent="448"
     descent="-64"
-    bbox="20.9338 -37.7578 490.922 423.536"
+    bbox="20.9338 -37.7578 499.205 423.536"
     underline-thickness="25.6"
     underline-position="-51.2"
-    unicode-range="U+F100-F106"
+    unicode-range="U+F100-F108"
   />
     <missing-glyph />
     <glyph glyph-name="uniF100" unicode="&#xf100;" 
@@ -68,8 +68,12 @@ c14.7539 -0.000976562 28.8125 -0.000976562 43.5205 -0.000976562z" />
 d="M419.092 355.981c43.5625 -43.5635 67.5547 -101.484 67.5547 -163.093c0 -61.6074 -23.9912 -119.527 -67.5547 -163.092c-43.5635 -43.5635 -101.483 -67.5547 -163.092 -67.5547s-119.529 23.9912 -163.093 67.5547
 c-43.5635 43.5645 -67.5547 101.484 -67.5547 163.092c0 61.6094 23.9912 119.529 67.5547 163.093s101.484 67.5547 163.093 67.5547s119.528 -23.9922 163.092 -67.5547z" />
     <glyph glyph-name="uniF105" unicode="&#xf105;" 
-d="M71.6797 -21.335v426.667h151.04v-426.667h-151.04zM289.282 -21.335v426.667h151.04v-426.667h-151.04z" />
+d="M23.04 329.776l238.083 -141.591l-238.083 -133.965v275.556zM261.123 329.776l238.082 -141.591l-238.082 -133.965v275.556z" />
     <glyph glyph-name="uniF106" unicode="&#xf106;" 
+d="M71.6797 -21.335v426.667h151.04v-426.667h-151.04zM289.282 -21.335v426.667h151.04v-426.667h-151.04z" />
+    <glyph glyph-name="uniF107" unicode="&#xf107;" 
 d="M71.6797 405.332l368.643 -219.238l-368.643 -207.429v426.667z" />
+    <glyph glyph-name="uniF108" unicode="&#xf108;" 
+d="M499.205 54.2207l-238.082 141.591l238.082 133.965v-275.556zM261.123 54.2207l-238.083 141.591l238.083 133.965v-275.556z" />
   </font>
 </defs></svg>

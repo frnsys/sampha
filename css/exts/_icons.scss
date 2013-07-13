@@ -14,8 +14,10 @@
 .icon-link:before,
 .icon-logo:before,
 .icon-music:before,
+.icon-next:before,
 .icon-pause:before,
-.icon-play:before {
+.icon-play:before,
+.icon-prev:before {
   font-family: "icons";
   font-style: normal;
   font-weight: normal;
@@ -32,5 +34,7 @@
 .icon-link:before { content: "\f102"; }
 .icon-logo:before { content: "\f103"; }
 .icon-music:before { content: "\f104"; }
-.icon-pause:before { content: "\f105"; }
-.icon-play:before { content: "\f106"; }
+.icon-next:before { content: "\f105"; }
+.icon-pause:before { content: "\f106"; }
+.icon-play:before { content: "\f107"; }
+.icon-prev:before { content: "\f108"; }

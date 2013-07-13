@@ -36,19 +36,6 @@
         window.aural = new Aural();
     }, false);
 
-    // Audio controls
-    $('.controls').on('click', '.icon-play', function() {
-        window.aural.play();
-        $(this)
-            .removeClass('icon-play')
-            .addClass('icon-pause');
-    });
-    $('.controls').on('click', '.icon-pause', function() {
-        window.aural.pause();
-        $(this)
-            .removeClass('icon-pause')
-            .addClass('icon-play');
-    });
 
     // Nav
     $('[data-target=releases]').on('click', function(e) {
@@ -393,6 +380,26 @@
 
             // Set up the audio
             ø.setup(playlist[ø.current_track]);
+
+            // Audio controls
+            $('.controls').on('click', '.icon-play', function() {
+                ø.play();
+                $(this)
+                    .removeClass('icon-play')
+                    .addClass('icon-pause');
+            });
+            $('.controls').on('click', '.icon-pause', function() {
+                ø.pause();
+                $(this)
+                    .removeClass('icon-pause')
+                    .addClass('icon-play');
+            });
+            $('.icon-next').click(function() {
+                ø.next();
+            });
+            $('.icon-prev').click(function() {
+                ø.prev();
+            });
         }
 
         Aural.prototype.setup = function(filename) {
@@ -466,13 +473,37 @@
             // If we are not at the end of the playlist...
             if ( ø.current_track < playlist.length - 1 ) {
                 ø.current_track++;
-
-                // Setup the new track.
-                ø.setup(playlist[ø.current_track]);
-
-                // Play!
-                ø.play();
+            } else {
+                ø.current_track = 0;
             }
+
+            // Setup the new track.
+            ø.setup(playlist[ø.current_track]);
+
+            // Play!
+            ø.play();
+        }
+
+        Aural.prototype.prev = function() {
+            var ø = this;
+
+            // Pause the current audio.
+            if (ø.audio) {
+                ø.pause();
+            }
+
+            // If we are not at the end of the playlist...
+            if ( ø.current_track > 0 ) {
+                ø.current_track--;
+            } else {
+                ø.current_track = playlist.length - 1;
+            }
+
+            // Setup the new track.
+            ø.setup(playlist[ø.current_track]);
+
+            // Play!
+            ø.play();
         }
 
         return Aural;
