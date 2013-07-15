@@ -16,8 +16,8 @@
 (function() {
 
     var playlist = [
-        'indecision',
-        'track_2'
+        'without',
+        'indecision'
     ];
 
     function isMobile() {
