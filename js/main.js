@@ -86,10 +86,16 @@
     });
 
     // Release dropdowns
+    var dropping = false;
     $('.release').on('mouseenter', function() {
-        $(this).find('ul').stop().slideDown();
+        if (!dropping) {
+            dropping = true;
+            $(this).find('ul').slideDown(function() {
+                dropping = false;
+            });
+        }
     }).on('mouseleave', function() {
-        $(this).find('ul').stop().slideUp();
+        $(this).find('ul').slideUp();
     });
 
     // External links pause the track.
