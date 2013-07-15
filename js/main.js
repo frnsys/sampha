@@ -31,7 +31,7 @@
         // Try to setup the AudioContext, if supported.
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         if (window.AudioContext == null) {
-            alert("The Web Audio API is not yet supported by your browser. For the full experience, please use the latest Chrome or Safari.");
+            alert("The Web Audio API is not yet supported by your browser. For the full experience, please use the latest version of Chrome.");
         }
         window.aural = new Aural();
     }, false);
@@ -354,7 +354,6 @@
 
     })();
 
-
     // Audio elements (i.e. music)
     var Aural = (function() {
 
@@ -448,7 +447,12 @@
 
         Aural.prototype.play = function() {
             this.audio.play();
-            if (window.AudioContext != null) {
+
+            // Also check if the browser is Safari.
+            // This is really hacky, but Safari support is REALLY wonky right now.
+            var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+
+            if (window.AudioContext != null || isSafari ) {
                 this.visual.enabled = true;
                 this.visualize();
             }
