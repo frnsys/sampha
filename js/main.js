@@ -31,7 +31,7 @@
         // Try to setup the AudioContext, if supported.
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         if (window.AudioContext == null) {
-            alert("The Web Audio API is not yet supported by your browser. For the full experience, please use the latest version of Chrome.");
+            //alert("The Web Audio API is not yet supported by your browser. For the full experience, please use the latest version of Chrome.");
         }
         window.aural = new Aural();
     }, false);
