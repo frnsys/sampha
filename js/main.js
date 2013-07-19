@@ -17,7 +17,8 @@
 
     var playlist = [
         'without',
-        'indecision'
+        'indecision',
+        'what_you_wont_do_for_love'
     ];
 
     function isMobile() {
