@@ -65,7 +65,7 @@
             bottom: 0
         });
     });
-    $('.contact-trigger').on('click', function() {
+    $('.contact-trigger, .icon-logo').on('click', function() {
         if ( $('.icon-logo').hasClass('on') ) {
             $('.icon-logo').removeClass('on');
             $('.contact').animate({
