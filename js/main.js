@@ -21,6 +21,10 @@
         'what_you_wont_do_for_love'
     ];
 
+    // Also check if the browser is Safari.
+    // This is really hacky, but Safari support is REALLY wonky right now.
+    var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+
     function isMobile() {
         // Treat mobile/tablet devices differently.
         var mobileBreakpoint = 768;
@@ -423,18 +427,20 @@
             // Keep track of which track we are on.
             ø.current_track = 0;
 
-            // Create the visualizer.
-            ø.visual = new Visual();
+            if ( !isSafari ) {
+                // Create the visualizer.
+                ø.visual = new Visual();
 
-            if (window.AudioContext != null) {
-                // Create the audio context and analyser.
-                ø.audioCtx = new AudioContext();
-                ø.analyser = ø.audioCtx.createAnalyser();
+                if (window.AudioContext != null) {
+                    // Create the audio context and analyser.
+                    ø.audioCtx = new AudioContext();
+                    ø.analyser = ø.audioCtx.createAnalyser();
 
-                // Connect analyser ==> output,
-                // i.e. analyser output to the audio context's destination,
-                // i.e. the speakers.
-                ø.analyser.connect(ø.audioCtx.destination);
+                    // Connect analyser ==> output,
+                    // i.e. analyser output to the audio context's destination,
+                    // i.e. the speakers.
+                    ø.analyser.connect(ø.audioCtx.destination);
+                }
             }
 
             // Set up the audio
@@ -508,9 +514,6 @@
         Aural.prototype.play = function() {
             this.audio.play();
 
-            // Also check if the browser is Safari.
-            // This is really hacky, but Safari support is REALLY wonky right now.
-            var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
 
             if (window.AudioContext != null || isSafari ) {
                 this.visualize();
