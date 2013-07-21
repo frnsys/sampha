@@ -430,17 +430,17 @@
             if ( !isSafari ) {
                 // Create the visualizer.
                 ø.visual = new Visual();
+            }
 
-                if (window.AudioContext != null) {
-                    // Create the audio context and analyser.
-                    ø.audioCtx = new AudioContext();
-                    ø.analyser = ø.audioCtx.createAnalyser();
+            if (window.AudioContext != null) {
+                // Create the audio context and analyser.
+                ø.audioCtx = new AudioContext();
+                ø.analyser = ø.audioCtx.createAnalyser();
 
-                    // Connect analyser ==> output,
-                    // i.e. analyser output to the audio context's destination,
-                    // i.e. the speakers.
-                    ø.analyser.connect(ø.audioCtx.destination);
-                }
+                // Connect analyser ==> output,
+                // i.e. analyser output to the audio context's destination,
+                // i.e. the speakers.
+                ø.analyser.connect(ø.audioCtx.destination);
             }
 
             // Set up the audio
@@ -515,7 +515,7 @@
             this.audio.play();
 
 
-            if (window.AudioContext != null || isSafari ) {
+            if (window.AudioContext != null && !isSafari ) {
                 this.visualize();
             }
         }
