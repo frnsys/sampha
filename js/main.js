@@ -134,6 +134,31 @@
         $('.icon-pause').click();
     });
 
+    // Videos
+    $('[data-type=video]').on('click', function(e) {
+        if ( !isMobile() ) {
+            e.preventDefault();
+
+            var chunks = $(this).attr('href').replace(/^\/|\/$/g, '').split('/'),
+                video_id = chunks[ chunks.length - 1 ],
+                source = 'http://player.vimeo.com/video/' + video_id + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=c34166&amp;autoplay=1',
+
+            embedCode = '<div class="has-video">'+
+                            '<div class="embed-container">'+
+                                '<iframe src="' + source + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'+
+                                '<div class="icon-close"></div>'+
+                            '</div>'+
+                        '</div>';
+            $('.overlay').append( embedCode ).fadeIn('600');
+        }
+    });
+
+    $('.overlay').on('click', '.icon-close', function() {
+		$('.overlay').fadeOut('600', function() {
+			$(this).html('');
+		});
+    });
+
 
     // Visual elements (i.e. canvas)
     var Visual = (function() {
