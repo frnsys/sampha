@@ -156,7 +156,7 @@
 
             // Bind polygon shapes to horizontal mouse movement.
             $(window).on('mousemove', function(e){
-                if ( !isMobile() && ø.enabled ) {
+                if ( !isMobile() ) {
                     // Calculate theta.
                     var mouse_x = e.pageX * window.devicePixelRatio;
                     ø.start.x = e.pageX * window.devicePixelRatio,
@@ -277,84 +277,82 @@
             // Draw the base image.
             ctx.drawImage(ø.baseImg, 0,0, canvas.width, canvas.height);
 
-            if ( ø.enabled ) {
-                // To restore non-clipped state.
-                ctx.save();
+            // To restore non-clipped state.
+            ctx.save();
 
-                // Draw the soundwave.
-                ctx.beginPath();
-                ctx.moveTo(ø.start.x, ø.start.y);
-                for (var i = 0; i < pCache.length + 1; i++) {
-                    var _p  = pCache[i-1] || ø.start,
-                        p   = pCache[i] || ø.end,
-                        mag = mags[i] || mags[i-1],
-                        x_len = mag,
-                        _ctrl = {}, ctrl = {}, ymod;
+            // Draw the soundwave.
+            ctx.beginPath();
+            ctx.moveTo(ø.start.x, ø.start.y);
+            for (var i = 0; i < pCache.length + 1; i++) {
+                var _p  = pCache[i-1] || ø.start,
+                    p   = pCache[i] || ø.end,
+                    mag = mags[i] || mags[i-1],
+                    x_len = mag,
+                    _ctrl = {}, ctrl = {}, ymod;
 
-                    // Straighten the beginning and ending segments.
-                    if ( _p === ø.start || p === ø.end ) {
-                        x_len = 0,
-                        _ctrl.y = _p.y,
-                        ctrl.y = p.y;
-                        _ctrl.x = _p.x,
-                        ctrl.x = p.x;
-                    } else {
-                        // Theta needs to be shifted by π/2,
-                        // and then our target angle is
-                        // π/2 - the adjusted theta.
-                        // note: the angle is (Math.PI/2) - (ø.theta + Math.PI/2)
-                        ymod = Math.tan((Math.PI/2) - (ø.theta + (Math.PI/2))) * x_len,
-                        _ctrl.y = _p.y - ymod,
-                        ctrl.y = p.y - ymod;
-                        _ctrl.x = _p.x + x_len,
-                        ctrl.x = p.x + x_len;
-                    }
-
-                    // Draw the curve.
-                    ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
-                                      ctrl.x, ctrl.y,
-                                      p.x, p.y);
+                // Straighten the beginning and ending segments.
+                if ( _p === ø.start || p === ø.end ) {
+                    x_len = 0,
+                    _ctrl.y = _p.y,
+                    ctrl.y = p.y;
+                    _ctrl.x = _p.x,
+                    ctrl.x = p.x;
+                } else {
+                    // Theta needs to be shifted by π/2,
+                    // and then our target angle is
+                    // π/2 - the adjusted theta.
+                    // note: the angle is (Math.PI/2) - (ø.theta + Math.PI/2)
+                    ymod = Math.tan((Math.PI/2) - (ø.theta + (Math.PI/2))) * x_len,
+                    _ctrl.y = _p.y - ymod,
+                    ctrl.y = p.y - ymod;
+                    _ctrl.x = _p.x + x_len,
+                    ctrl.x = p.x + x_len;
                 }
 
-                for (var i = pCache.length; i >= 0; i--) {
-                    var _p  = pCache[i] || ø.end,
-                        p   = pCache[i-1] || ø.start,
-                        mag = mags[i] || mags[i-1],
-                        x_len = mag,
-                        _ctrl = {}, ctrl = {}, angle;
-
-                    // Straighten the beginning and ending segments.
-                    if ( p === ø.start || _p === ø.end ) {
-                        x_len = 0,
-                        _ctrl.y = _p.y,
-                        ctrl.y = p.y;
-                    } else {
-                        // Theta needs to be shifted by π/2,
-                        // and then our target angle is
-                        // π/2 - the adjusted theta.
-                        // note: the angle is (Math.PI/2) - (ø.theta + Math.PI/2)
-                        ymod = Math.tan((Math.PI/2) - (ø.theta + (Math.PI/2))) * x_len,
-                        _ctrl.y = _p.y + ymod,
-                        ctrl.y = p.y + ymod;
-                    }
-
-                        _ctrl.x = _p.x - x_len,
-                        ctrl.x = p.x - x_len;
-                    // Draw the curve.
-                    ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
-                                      ctrl.x, ctrl.y,
-                                      p.x, p.y);
-                }
-                ctx.closePath();
-                ctx.clip();
-
-                // Draw the image.
-                ctx.drawImage(ø.colorImg, 0,0, canvas.width, canvas.height);
-
-                // Restores non-clipped state while preserving
-                // the rendered clipping.
-                ctx.restore();
+                // Draw the curve.
+                ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
+                                  ctrl.x, ctrl.y,
+                                  p.x, p.y);
             }
+
+            for (var i = pCache.length; i >= 0; i--) {
+                var _p  = pCache[i] || ø.end,
+                    p   = pCache[i-1] || ø.start,
+                    mag = mags[i] || mags[i-1],
+                    x_len = mag,
+                    _ctrl = {}, ctrl = {}, angle;
+
+                // Straighten the beginning and ending segments.
+                if ( p === ø.start || _p === ø.end ) {
+                    x_len = 0,
+                    _ctrl.y = _p.y,
+                    ctrl.y = p.y;
+                } else {
+                    // Theta needs to be shifted by π/2,
+                    // and then our target angle is
+                    // π/2 - the adjusted theta.
+                    // note: the angle is (Math.PI/2) - (ø.theta + Math.PI/2)
+                    ymod = Math.tan((Math.PI/2) - (ø.theta + (Math.PI/2))) * x_len,
+                    _ctrl.y = _p.y + ymod,
+                    ctrl.y = p.y + ymod;
+                }
+
+                    _ctrl.x = _p.x - x_len,
+                    ctrl.x = p.x - x_len;
+                // Draw the curve.
+                ctx.bezierCurveTo(_ctrl.x, _ctrl.y,
+                                  ctrl.x, ctrl.y,
+                                  p.x, p.y);
+            }
+            ctx.closePath();
+            ctx.clip();
+
+            // Draw the image.
+            ctx.drawImage(ø.colorImg, 0,0, canvas.width, canvas.height);
+
+            // Restores non-clipped state while preserving
+            // the rendered clipping.
+            ctx.restore();
         }
 
         return Visual;
@@ -460,7 +458,6 @@
             var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
 
             if (window.AudioContext != null || isSafari ) {
-                this.visual.enabled = true;
                 this.visualize();
             }
         }
