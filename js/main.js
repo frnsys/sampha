@@ -40,18 +40,48 @@
 
     // Nav
     $('[data-target=releases]').on('click', function(e) {
+        var r = $('.releases');
         e.preventDefault();
-        $('.releases').fadeToggle();
+
+        // Toggle release pane
+        if ( parseInt(r.css('left'), 10) < 0 ) {
+            r.stop().animate({
+                'left': 0
+            });
+        } else {
+            r.stop().animate({
+                'left': '-400px'
+            });
+        }
+
+        // Hide activity pane if on mobile
         if ( isMobile() ) {
-            $('.activity').fadeOut();
+            $('.activity').animate({
+                'right': '-400px'
+            });
         }
         return false;
     });
     $('[data-target=activity]').on('click', function(e) {
+        var a = $('.activity');
         e.preventDefault();
-        $('.activity').fadeToggle();
+
+        // Toggle activity pane
+        if ( parseInt(a.css('right'), 10) < 0 ) {
+            a.stop().animate({
+                'right': 0
+            });
+        } else {
+            a.stop().animate({
+                'right': '-400px'
+            });
+        }
+
+        // Hide releases pane if on mobile
         if ( isMobile() ) {
-            $('.releases').fadeOut();
+            $('.releases').animate({
+                'left': '-400px'
+            });
         }
         return false;
     });

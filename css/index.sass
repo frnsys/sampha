@@ -91,12 +91,10 @@ a, a:visited
 
 
 section
-    display: none
     z-index: 10
     position: absolute
     color: #fff
     font-size: 0.8em
-    //padding: 2em 4em
     max-width: 400px
     max-height: 80%
     height: 100%
@@ -118,6 +116,7 @@ $releases-color: #C34166
     border: 1px solid $releases-color
     border-left: none
     width: 400px
+    left: -400px
     h3
         margin-top: 2.4em
     h6
@@ -151,7 +150,7 @@ $releases-color: #C34166
 
 $activity-color: #7D65D7
 .activity
-    right: 0
+    right: -400px
     width: 400px
     border: 1px solid $activity-color
     border-right: none
