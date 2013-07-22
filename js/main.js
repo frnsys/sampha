@@ -42,6 +42,16 @@
     }, false);
 
 
+    // Get URL params by names
+    // Thx: http://bit.ly/1bE7KiC
+    function getParameterByName(url, name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(url);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+
     // Nav
     $('[data-target=releases]').on('click', function(e) {
         var r = $('.releases');
@@ -143,9 +153,9 @@
         if ( !isMobile() ) {
             e.preventDefault();
 
-            var chunks = $(this).attr('href').replace(/^\/|\/$/g, '').split('/'),
-                video_id = chunks[ chunks.length - 1 ],
-                source = 'http://player.vimeo.com/video/' + video_id + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=c34166&amp;autoplay=1',
+            var url = $(this).attr('href'),
+                video_id = getParameterByName(url, 'v'),
+                source = "//www.youtube.com/embed/" + video_id + "?autoplay=1",
 
             embedCode = '<div class="has-video">'+
                             '<div class="embed-container">'+
