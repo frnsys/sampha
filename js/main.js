@@ -123,7 +123,7 @@
             });
         }
     });
-    $('.contact > div, .contact-trigger').on('mouseleave', function() {
+    $('.contact > div').on('mouseleave', function() {
         $('.icon-logo').removeClass('on');
         $('.contact').animate({
             bottom: '-14em'
