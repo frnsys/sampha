@@ -4,11 +4,8 @@
 # TEAM
 
     PUBLIC SCIENCE // publicscience.co // @_publicscience
-    Francis Tseng -- Development and Design -- @frnsys
-
-# THANKS
-
-    <name>
+    Francis Tseng -- Development and Design -- @frnsys // frnsys.com
+    Brian Justie -- http://no-re.co/rdings // @brian_justie
 
 # TECHNOLOGY COLOPHON
 
