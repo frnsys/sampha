@@ -154,8 +154,18 @@
             e.preventDefault();
 
             var url = $(this).attr('href'),
-                video_id = getParameterByName(url, 'v'),
-                source = "//www.youtube.com/embed/" + video_id + "?autoplay=1",
+                chunks, video_id, source, embedCode;
+
+            if ( url.match(/youtube/g) ) {
+                video_id = getParameterByName(url, 'v');
+                source = "//www.youtube.com/embed/" + video_id + "?autoplay=1";
+            } else if ( url.match(/vimeo/g) ) {
+                chunks = url.replace(/^\/|\/$/g, '').split('/');
+                console.log(chunks);
+                video_id = chunks[chunks.length - 1];
+                source = 'http://player.vimeo.com/video/' + video_id + '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=c34166&amp;autoplay=1'
+            }
+
 
             embedCode = '<div class="has-video">'+
                             '<div class="embed-container">'+
